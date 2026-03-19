@@ -1,0 +1,170 @@
+name: Import Submission
+
+on:
+  workflow_dispatch:
+    inputs:
+      order_id:
+        description: "OpenSUSI order ID"
+        required: true
+        type: string
+
+      github_id:
+        description: "GitHub owner/user name"
+        required: true
+        type: string
+
+      source_repo:
+        description: "Source repository in owner/repo format"
+        required: true
+        type: string
+
+      source_run_id:
+        description: "GitHub Actions workflow run ID"
+        required: true
+        type: string
+
+      source_artifact_name:
+        description: "Artifact name to import"
+        required: true
+        default: "GDSII_MDP"
+        type: string
+
+      target_dir:
+        description: "Destination directory in this repo"
+        required: true
+        type: string
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: OpenSUSI
+
+      - name: Log inputs
+        run: |
+          echo "order_id=${{ inputs.order_id }}"
+          echo "github_id=${{ inputs.github_id }}"
+          echo "source_repo=${{ inputs.source_repo }}"
+          echo "source_run_id=${{ inputs.source_run_id }}"
+          echo "source_artifact_name=${{ inputs.source_artifact_name }}"
+          echo "target_dir=${{ inputs.target_dir }}"
+
+      - name: Download artifact ZIP from source repo
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          SOURCE_REPO: ${{ inputs.source_repo }}
+          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+          SOURCE_ARTIFACT_NAME: ${{ inputs.source_artifact_name }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p work
+          API_URL="https://api.github.com/repos/${SOURCE_REPO}/actions/runs/${SOURCE_RUN_ID}/artifacts"
+
+          echo "Listing artifacts from ${SOURCE_REPO}, run ${SOURCE_RUN_ID}"
+          JSON=$(curl -fsSL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${API_URL}")
+
+          ARTIFACT_ID=$(printf '%s' "${JSON}" | python3 - <<'PY'
+import json, sys, os
+data = json.load(sys.stdin)
+wanted = os.environ["SOURCE_ARTIFACT_NAME"]
+for a in data.get("artifacts", []):
+    if a.get("name") == wanted:
+        print(a["id"])
+        raise SystemExit(0)
+raise SystemExit(1)
+PY
+)
+
+          if [ -z "${ARTIFACT_ID}" ]; then
+            echo "Artifact not found: ${SOURCE_ARTIFACT_NAME}"
+            exit 1
+          fi
+
+          echo "Resolved artifact id: ${ARTIFACT_ID}"
+
+          ZIP_API="https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${ARTIFACT_ID}/zip"
+
+          echo "Downloading artifact ZIP"
+          curl -fsSL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${ZIP_API}" \
+            -o work/submission.zip
+
+          ls -lh work/submission.zip
+
+      - name: Unzip artifact
+        run: |
+          set -euo pipefail
+          mkdir -p work/unpacked
+          unzip -o work/submission.zip -d work/unpacked
+          find work/unpacked -maxdepth 3 -type f | sort
+
+      - name: Place imported GDS
+        env:
+          TARGET_DIR: ${{ inputs.target_dir }}
+          SOURCE_ARTIFACT_NAME: ${{ inputs.source_artifact_name }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p "${TARGET_DIR}"
+
+          GDS_FILE=$(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \) | head -n 1 || true)
+
+          if [ -z "${GDS_FILE}" ]; then
+            echo "No GDS file found in artifact ZIP"
+            exit 1
+          fi
+
+          cp "${GDS_FILE}" "${TARGET_DIR}/GDSII_MDP.gds"
+
+          echo "Placed:"
+          ls -lh "${TARGET_DIR}/GDSII_MDP.gds"
+
+      - name: Write import manifest
+        env:
+          TARGET_DIR: ${{ inputs.target_dir }}
+        run: |
+          set -euo pipefail
+
+          cat > "${TARGET_DIR}/manifest.json" <<EOF
+          {
+            "orderId": "${{ inputs.order_id }}",
+            "githubId": "${{ inputs.github_id }}",
+            "sourceRepo": "${{ inputs.source_repo }}",
+            "sourceRunId": "${{ inputs.source_run_id }}",
+            "sourceArtifactName": "${{ inputs.source_artifact_name }}"
+          }
+          EOF
+
+          cat "${TARGET_DIR}/manifest.json"
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+
+          git config user.name "opensusi-bot"
+          git config user.email "bot@opensusi.org"
+
+          git add "${{ inputs.target_dir }}"
+          git commit -m "Import ${{ inputs.github_id }} from run ${{ inputs.source_run_id }}" || echo "No changes"
+          git push
