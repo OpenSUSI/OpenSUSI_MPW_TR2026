@@ -22,7 +22,7 @@ from aggregate_manifest import write_manifest
 
 DEFAULT_INFO_YAML = Path("info.yaml")
 DEFAULT_USERS_DIR = Path("users")
-DEFAULT_OUTPUT_GDS = Path("project/MDP_GDSII_ALL.gds")
+DEFAULT_OUTPUT_GDS = Path("project/ALL_GDSII_MDP.gds")
 DEFAULT_OUTPUT_MANIFEST = Path("project/manifest.json")
 
 
