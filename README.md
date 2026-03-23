@@ -7,7 +7,7 @@ Below is the current user layout of the MPW shuttle.
 
 ### Interactive Layout (SVG)
 
-Click each tile to open the corresponding GDSII file.
+Click each tile to open the corresponding Tapeout directory.
 
 ![MPW Layout](./USERS.svg)
 
