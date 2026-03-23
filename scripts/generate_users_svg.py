@@ -80,7 +80,7 @@ def entry_label(entry: dict[str, Any]) -> tuple[str, str, str]:
     if entry_type == "teg":
         title = "TEG"
     elif entry_type == "fill":
-        title = "FILL"
+        title = "EMPTY"
     else:
         title = github_id
 
@@ -129,8 +129,8 @@ def generate_svg(
         """<style>
 text { font-family: Arial, sans-serif; fill: black; }
 .tile { fill: white; stroke: black; stroke-width: 1; }
-.tile-teg { fill: #f2f2f2; }
-.tile-user { fill: #e8f2ff; }
+.tile-teg { fill: #cdd6c1; }
+.tile-user { fill: #ffe8f4; }
 .tile-fill { fill: #f7f7f7; }
 .grid-label { font-size: 12px; }
 .title { font-size: 18px; font-weight: bold; }
