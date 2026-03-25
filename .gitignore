@@ -1,0 +1,14 @@
+.gitignore
+.DS_Store
+script/__pycache__
+# ------------------------
+# Generated outputs
+# ------------------------
+project/*
+!project/.gitkeep
+# ------------------------
+# User submissions
+# ------------------------
+users/*
+!users/.gitkeep
+!users/000_system/
