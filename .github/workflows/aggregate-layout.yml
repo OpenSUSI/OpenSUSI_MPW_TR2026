@@ -5,6 +5,10 @@
 # ----- ------ ----- ----- ------ ----- ----- ------ ----- 
 name: Aggregate Layout
 
+concurrency:
+  group: opensusi-mpw-main
+  cancel-in-progress: false
+
 on:
   workflow_dispatch:
   push:
