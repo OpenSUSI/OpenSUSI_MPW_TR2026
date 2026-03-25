@@ -1,8 +1,8 @@
-# ----- ------ ----- ----- ------ ----- ----- ------ ----- 
-# OpenSUSI jun1okamura <jun1okamura@gmail.com>  
+# ----- ------ ----- ----- ------ ----- ----- ------ -----
+# OpenSUSI jun1okamura <jun1okamura@gmail.com>
 # LICENSE: Apache License Version 2.0, January 2004,
 #          http://www.apache.org/licenses/
-# ----- ------ ----- ----- ------ ----- ----- ------ ----- 
+# ----- ------ ----- ----- ------ ----- ----- ------ -----
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Optional
@@ -13,7 +13,6 @@ import json
 class Placement:
     type: str
     githubId: str
-    normalizedRepoName: Optional[str] = None
     gdsFile: str
     gdsTopCell: str
     x: float
@@ -21,6 +20,7 @@ class Placement:
     tileIndex: int
     row: Optional[int]
     col: Optional[int]
+    normalizedRepoName: Optional[str] = None
     orderId: Optional[str] = None
     sourceRepo: Optional[str] = None
     sourceRunId: Optional[str] = None
