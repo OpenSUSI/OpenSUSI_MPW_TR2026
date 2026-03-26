@@ -37,6 +37,11 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Sync main
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -86,10 +91,11 @@ jobs:
           git add -f USERS.md
           git add -f USERS.svg
 
-          git commit -m "Update aggregated layout" || {
+          git diff --cached --quiet && {
             echo "No changes"
             exit 0
           }
 
-          git pull --rebase origin main
+          git commit -m "Update aggregated layout"
           git push origin HEAD:main
+          
