@@ -28,9 +28,6 @@ on:
         required: true
         default: "GDSII_MDP"
         type: string
-      target_dir:
-        required: true
-        type: string
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -56,6 +53,17 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
 
+      - name: Compute paths
+        id: vars
+        run: |
+          set -euo pipefail
+
+          SHORT_ORDER_ID=$(echo "${{ inputs.order_id }}" | tr -d '-' | cut -c1-10)
+          TARGET_DIR="users/${{ inputs.github_id }}/${SHORT_ORDER_ID}"
+
+          echo "short_order_id=${SHORT_ORDER_ID}" >> "$GITHUB_OUTPUT"
+          echo "target_dir=${TARGET_DIR}" >> "$GITHUB_OUTPUT"
+
       - name: Download artifact
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -66,13 +74,14 @@ jobs:
           set -euo pipefail
           mkdir -p work
 
-          JSON=$(curl -fsSL \
+          curl -fsSL \
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${SOURCE_REPO}/actions/runs/${SOURCE_RUN_ID}/artifacts")
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/runs/${SOURCE_RUN_ID}/artifacts" \
+            -o work/artifacts.json
 
           ARTIFACT_ID=$(python3 scripts/resolve_artifact_id.py \
-            --json-file <(echo "$JSON") \
+            --json-file work/artifacts.json \
             --artifact-name "${SOURCE_ARTIFACT_NAME}")
 
           curl -fsSL \
@@ -83,27 +92,28 @@ jobs:
 
       - name: Extract GDS
         env:
-          TARGET_DIR: ${{ inputs.target_dir }}
+          TARGET_DIR: ${{ steps.vars.outputs.target_dir }}
         run: |
           set -euo pipefail
 
           unzip -o work/submission.zip -d work/unpacked
           mkdir -p "${TARGET_DIR}"
 
-          GDS_FILE=$(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \))
+          mapfile -t GDS_FILES < <(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \))
 
-          COUNT=$(echo "$GDS_FILE" | wc -l)
-          if [ "$COUNT" -ne 1 ]; then
-            echo "Expected exactly one GDS file, found: $COUNT"
+          if [ "${#GDS_FILES[@]}" -ne 1 ]; then
+            echo "Expected exactly one GDS file, found: ${#GDS_FILES[@]}"
             exit 1
           fi
 
-          cp "$GDS_FILE" "${TARGET_DIR}/GDSII_MDP.gds"
+          cp "${GDS_FILES[0]}" "${TARGET_DIR}/GDSII_MDP.gds"
 
       - name: Write manifest
         run: |
+          set -euo pipefail
+
           python3 scripts/write_import_manifest.py \
-            --target-dir "${{ inputs.target_dir }}" \
+            --target-dir "${{ steps.vars.outputs.target_dir }}" \
             --order-id "${{ inputs.order_id }}" \
             --github-id "${{ inputs.github_id }}" \
             --source-repo "${{ inputs.source_repo }}" \
@@ -117,16 +127,22 @@ jobs:
           git config user.name "opensusi-bot"
           git config user.email "bot@opensusi.org"
 
-          git add -f "${{ inputs.target_dir }}/GDSII_MDP.gds"
-          git add -f "${{ inputs.target_dir }}/manifest.json"
+          git add -f "${{ steps.vars.outputs.target_dir }}/GDSII_MDP.gds"
+          git add -f "${{ steps.vars.outputs.target_dir }}/manifest.json"
 
-          git commit -m "Import ${{ inputs.github_id }} (${{ inputs.order_id }})" || echo "No changes"
+          git commit -m "Import ${{ inputs.github_id }} (${{ steps.vars.outputs.short_order_id }})" || {
+            echo "No changes"
+            exit 0
+          }
+
           git push
 
       - name: Trigger aggregate
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          set -euo pipefail
+
           curl -fsSL -X POST \
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "Accept: application/vnd.github+json" \
