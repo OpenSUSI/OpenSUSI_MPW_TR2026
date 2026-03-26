@@ -53,6 +53,16 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          pip install klayout
+
       - name: Compute paths
         id: vars
         run: |
@@ -107,6 +117,15 @@ jobs:
           fi
 
           cp "${GDS_FILES[0]}" "${TARGET_DIR}/GDSII_MDP.gds"
+
+      - name: Rename top cell
+        run: |
+          set -euo pipefail
+
+          python3 scripts/rename_gds_top.py \
+            --gds "${{ steps.vars.outputs.target_dir }}/GDSII_MDP.gds" \
+            --github-id "${{ inputs.github_id }}" \
+            --source-repo "${{ inputs.source_repo }}"
 
       - name: Write manifest
         run: |
