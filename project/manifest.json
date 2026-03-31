@@ -38,7 +38,7 @@
       "tileIndex": 1,
       "row": 0,
       "col": 1,
-      "paymentSequence": null,
+      "paymentSequence": 1,
       "normalizedRepoName": "tk-1um_test2",
       "shortOrderId": "876fcd74e3",
       "orderId": "876fcd74-e35d-4410-b891-6315e7ffcbf9",
