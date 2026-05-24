@@ -1,0 +1,17 @@
+# ----- ------ ----- ----- ------ ----- ----- ------ -----
+# Tile-based logo mapping
+#
+# ----- ------ ----- ----- ------ ----- ----- ------ -----
+tile_num:
+  default:
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+    right_bottom: OpenSUSI_LOGO.gds
+
+  "1":
+    left_top    : FFG_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "2":
+    left_top    : FFG_LOGO.gds
+

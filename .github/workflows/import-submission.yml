@@ -1,0 +1,228 @@
+# ----- ------ ----- ----- ------ ----- ----- ------ -----
+# OpenSUSI jun1okamura <jun1okamura@gmail.com>
+# LICENSE: Apache License Version 2.0
+# ----- ------ ----- ----- ------ ----- ----- ------ -----
+name: Import Submission
+
+concurrency:
+  group: opensusi-import-${{ inputs.target_dir }}
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+    inputs:
+      order_id:
+        required: true
+        type: string
+      github_id:
+        required: true
+        type: string
+      source_repo:
+        required: true
+        type: string
+      source_run_id:
+        required: true
+        type: string
+      source_artifact_name:
+        required: true
+        default: "GDSII_MDP"
+        type: string
+      submission_sequence:
+        required: true
+        type: string
+      target_dir:
+        required: true
+        type: string
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: OpenSUSI
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          python3 -m pip install --upgrade pip
+          python3 -m pip install klayout
+
+      - name: Compute paths
+        id: vars
+        run: |
+          set -euo pipefail
+
+          TARGET_DIR="${{ inputs.target_dir }}"
+
+          echo "target_dir=${TARGET_DIR}" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          SOURCE_REPO: ${{ inputs.source_repo }}
+          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+          SOURCE_ARTIFACT_NAME: ${{ inputs.source_artifact_name }}
+        run: |
+          set -euo pipefail
+          mkdir -p work
+
+          curl -fsSL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/runs/${SOURCE_RUN_ID}/artifacts" \
+            -o work/artifacts.json
+
+          ARTIFACT_ID=$(python3 scripts/resolve_artifact_id.py \
+            --json-file work/artifacts.json \
+            --artifact-name "${SOURCE_ARTIFACT_NAME}")
+
+          curl -fsSL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${ARTIFACT_ID}/zip" \
+            -o work/submission.zip
+
+      - name: Extract GDS
+        env:
+          TARGET_DIR: ${{ steps.vars.outputs.target_dir }}
+        run: |
+          set -euo pipefail
+
+          unzip -o work/submission.zip -d work/unpacked
+          mkdir -p "${TARGET_DIR}"
+
+          mapfile -t GDS_FILES < <(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \))
+
+          if [ "${#GDS_FILES[@]}" -ne 1 ]; then
+            echo "Expected exactly one GDS file, found: ${#GDS_FILES[@]}"
+            exit 1
+          fi
+
+          cp "${GDS_FILES[0]}" "${TARGET_DIR}/GDSII_MDP.gds"
+
+      - name: Rename top cell
+        run: |
+          set -euo pipefail
+
+          python3 scripts/rename_gds_top.py \
+            --gds "${{ steps.vars.outputs.target_dir }}/GDSII_MDP.gds" \
+            --order-id "${{ inputs.order_id }}"
+
+      - name: Write manifest
+        run: |
+          set -euo pipefail
+
+          python3 scripts/write_import_manifest.py \
+            --order-id "${{ inputs.order_id }}" \
+            --github-id "${{ inputs.github_id }}" \
+            --source-repo "${{ inputs.source_repo }}" \
+            --source-run-id "${{ inputs.source_run_id }}" \
+            --source-artifact-name "${{ inputs.source_artifact_name }}" \
+            --submission-sequence "${{ inputs.submission_sequence }}" \
+            --output "${{ steps.vars.outputs.target_dir }}/manifest.json"
+
+      - name: Commit and push with retry
+        run: |
+          set -euo pipefail
+
+          git config user.name "opensusi-bot"
+          git config user.email "bot@opensusi.org"
+
+          TARGET_DIR="${{ steps.vars.outputs.target_dir }}"
+          COMMIT_MSG="Import ${{ inputs.github_id }} (${{ inputs.order_id }})"
+
+          stage_outputs() {
+            git add -f "${TARGET_DIR}/GDSII_MDP.gds"
+            git add -f "${TARGET_DIR}/manifest.json"
+          }
+
+          regenerate_outputs() {
+            mkdir -p "${TARGET_DIR}"
+
+            mapfile -t GDS_FILES < <(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \))
+
+            if [ "${#GDS_FILES[@]}" -ne 1 ]; then
+              echo "Expected exactly one GDS file during retry, found: ${#GDS_FILES[@]}"
+              exit 1
+            fi
+
+            cp "${GDS_FILES[0]}" "${TARGET_DIR}/GDSII_MDP.gds"
+
+            python3 scripts/rename_gds_top.py \
+              --gds "${TARGET_DIR}/GDSII_MDP.gds" \
+              --order-id "${{ inputs.order_id }}"
+
+            python3 scripts/write_import_manifest.py \
+              --order-id "${{ inputs.order_id }}" \
+              --github-id "${{ inputs.github_id }}" \
+              --source-repo "${{ inputs.source_repo }}" \
+              --source-run-id "${{ inputs.source_run_id }}" \
+              --source-artifact-name "${{ inputs.source_artifact_name }}" \
+              --submission-sequence "${{ inputs.submission_sequence }}" \
+              --output "${TARGET_DIR}/manifest.json"
+          }
+
+          stage_outputs
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m "${COMMIT_MSG}"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt ${attempt}"
+
+            if git push origin HEAD:main; then
+              echo "Push succeeded"
+              exit 0
+            fi
+
+            echo "Push failed. Remote main was updated. Re-sync and retry."
+
+            git fetch origin main
+            git rebase origin/main || {
+              echo "Rebase failed. Reset to origin/main and regenerate target files."
+              git rebase --abort || true
+              git reset --hard origin/main
+              regenerate_outputs
+            }
+
+            stage_outputs
+
+            if git diff --cached --quiet; then
+              echo "No changes after re-sync"
+              exit 0
+            fi
+
+            git commit -m "${COMMIT_MSG}"
+            sleep $((attempt * 3))
+          done
+
+          echo "Failed to push after retries"
+          exit 1
