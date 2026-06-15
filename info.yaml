@@ -31,7 +31,7 @@ logo:
 
   # expected logo bbox (centered origin)
   bbox:
-    x: 160.0
+    x: 320.0
     y: 160.0
 
   placements:
