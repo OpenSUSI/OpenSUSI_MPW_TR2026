@@ -21,6 +21,7 @@ class AggregateConfig:
 
     logo_dir: Path
     logo_default: str
+    logo_bbox: Optional[tuple[float, float]]
     logo_positions: list[tuple[float, float]]
 
     xy_layer: tuple[int, int]
@@ -125,6 +126,13 @@ def load_config(path: Path) -> AggregateConfig:
     logo_dir = Path(require_string(logo, "dir", "logo"))
     logo_default = require_string(logo, "default", "logo")
 
+    logo_bbox_data = logo.get("bbox")
+    logo_bbox: Optional[tuple[float, float]] = (
+        require_xy_pair(logo_bbox_data, "logo.bbox")
+        if isinstance(logo_bbox_data, dict)
+        else None
+    )
+
     top_left = require_xy_pair(
         logo_placements["top_left"],
         "logo.placements.top_left",
@@ -163,6 +171,7 @@ def load_config(path: Path) -> AggregateConfig:
         fill_gds=fill_gds,
         logo_dir=logo_dir,
         logo_default=logo_default,
+        logo_bbox=logo_bbox,
         logo_positions=logo_positions,
         xy_layer=xy_layer,
         xy_bbox=xy_bbox_pair,

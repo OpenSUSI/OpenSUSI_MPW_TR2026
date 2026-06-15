@@ -415,7 +415,7 @@ def get_or_load_logo_cell(
     if logo_cell is None:
         raise RuntimeError(f"Logo top cell not found after read: {logo_path}")
 
-    if hasattr(config, "logo_bbox"):
+    if config.logo_bbox is not None:
         limit_x_um, limit_y_um = config.logo_bbox
         ensure_bbox_within_limit(
             layout,
