@@ -17,6 +17,8 @@ on:
     paths:
       - "users/**"
       - "info.yaml"
+      - "map.yaml"
+      - "logos/**"
       - "scripts/**"
       - ".github/workflows/aggregate-layout.yml"
 
