@@ -3,9 +3,15 @@
   "submissionSequence": 1,
   "githubId": "jun1okamura",
   "sourceRepo": "jun1okamura/TR-1um_TEST3",
-  "sourceRunId": "27521987254",
+  "sourceRunId": "29131087981",
   "sourceArtifactName": "GDSII_MDP",
   "normalizedRepoName": "jun1okamura/TR-1um_TEST3",
   "gdsFile": "GDSII_MDP.gds",
-  "gdsTopCell": "ORD_260530_005051_01"
+  "gdsTopCell": "ORD_260530_005051_01",
+  "gdsiiDrawingFiles": [
+    "tr_1um_username.gds"
+  ],
+  "extractedFiles": [
+    "tr_1um_username.extracted"
+  ]
 }
