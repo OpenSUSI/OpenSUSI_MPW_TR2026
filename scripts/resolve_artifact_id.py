@@ -8,6 +8,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Optional
 
 
 def load_json(path: Path) -> dict:
@@ -16,18 +17,23 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def find_artifact_id(data: dict, name: str) -> int:
+def find_artifact_id(data: dict, name: str) -> Optional[int]:
     for artifact in data.get("artifacts", []):
         if artifact.get("name") == name:
             return artifact.get("id")
 
-    raise RuntimeError(f"Artifact not found: {name}")
+    return None
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Resolve artifact ID from GitHub API response")
     parser.add_argument("--json-file", required=True, type=Path)
     parser.add_argument("--artifact-name", required=True)
+    parser.add_argument(
+        "--allow-missing",
+        action="store_true",
+        help="Exit 0 with empty stdout instead of failing when the artifact is not found.",
+    )
     return parser.parse_args()
 
 
@@ -37,6 +43,12 @@ def main() -> None:
     try:
         data = load_json(args.json_file)
         artifact_id = find_artifact_id(data, args.artifact_name)
+
+        if artifact_id is None:
+            if args.allow_missing:
+                sys.exit(0)
+            raise RuntimeError(f"Artifact not found: {args.artifact_name}")
+
         print(artifact_id)
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)

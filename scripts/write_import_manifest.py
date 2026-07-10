@@ -16,6 +16,10 @@ def normalize_string(value: object) -> str:
     return str(value or "").strip()
 
 
+def parse_file_list(value: str) -> list[str]:
+    return [item.strip() for item in normalize_string(value).split(",") if item.strip()]
+
+
 def normalize_repo_name(value: str) -> str:
     raw = normalize_string(value)
     raw = re.sub(r"^https?://github\.com/", "", raw, flags=re.IGNORECASE)
@@ -62,6 +66,8 @@ def build_manifest(args: argparse.Namespace) -> dict:
         "normalizedRepoName": normalized_repo,
         "gdsFile": normalize_string(args.gds_file),
         "gdsTopCell": gds_top_cell,
+        "gdsiiDrawingFiles": parse_file_list(args.gdsii_drawing_files),
+        "extractedFiles": parse_file_list(args.extracted_files),
     }
 
 
@@ -87,6 +93,10 @@ def validate_manifest(manifest: dict) -> None:
         raise ValueError(
             f"Missing required manifest fields: {', '.join(missing)}"
         )
+
+    # gdsiiDrawingFiles / extractedFiles are optional: the corresponding WIX
+    # artifacts (GDSII_drawing / Extracted) may legitimately be absent, in
+    # which case these lists are empty.
 
     submission_sequence = int(manifest["submissionSequence"])
 
@@ -148,6 +158,24 @@ def parse_args() -> argparse.Namespace:
         "--gds-top-cell",
         default="",
         help="Optional override for GDS top cell name.",
+    )
+
+    parser.add_argument(
+        "--gdsii-drawing-files",
+        default="",
+        help=(
+            "Comma-separated list of file names placed in target_dir from the "
+            "GDSII_drawing artifact."
+        ),
+    )
+
+    parser.add_argument(
+        "--extracted-files",
+        default="",
+        help=(
+            "Comma-separated list of file names placed in target_dir from the "
+            "Extracted artifact."
+        ),
     )
 
     parser.add_argument(

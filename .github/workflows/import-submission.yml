@@ -80,7 +80,7 @@ jobs:
 
           echo "target_dir=${TARGET_DIR}" >> "$GITHUB_OUTPUT"
 
-      - name: Download artifact
+      - name: Download artifacts
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           SOURCE_REPO: ${{ inputs.source_repo }}
@@ -96,26 +96,51 @@ jobs:
             "https://api.github.com/repos/${SOURCE_REPO}/actions/runs/${SOURCE_RUN_ID}/artifacts" \
             -o work/artifacts.json
 
-          ARTIFACT_ID=$(python3 scripts/resolve_artifact_id.py \
+          # GDSII_MDP: 必須。存在しなければここで失敗する（従来通り）。
+          MDP_ARTIFACT_ID=$(python3 scripts/resolve_artifact_id.py \
             --json-file work/artifacts.json \
             --artifact-name "${SOURCE_ARTIFACT_NAME}")
 
           curl -fsSL \
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${ARTIFACT_ID}/zip" \
-            -o work/submission.zip
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${MDP_ARTIFACT_ID}/zip" \
+            -o "work/${SOURCE_ARTIFACT_NAME}.zip"
 
-      - name: Extract GDS
+          # GDSII_drawing / Extracted: 任意。WIX 側から未提供の場合は
+          # ダウンロードをスキップし、後続ステップでも無視する。
+          for NAME in GDSII_drawing Extracted; do
+            ARTIFACT_ID=$(python3 scripts/resolve_artifact_id.py \
+              --json-file work/artifacts.json \
+              --artifact-name "${NAME}" \
+              --allow-missing)
+
+            if [ -z "${ARTIFACT_ID}" ]; then
+              echo "Artifact '${NAME}' not found. Skipping."
+              continue
+            fi
+
+            curl -fsSL \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${ARTIFACT_ID}/zip" \
+              -o "work/${NAME}.zip"
+          done
+
+      - name: Extract submission files
+        id: extract
         env:
           TARGET_DIR: ${{ steps.vars.outputs.target_dir }}
+          SOURCE_ARTIFACT_NAME: ${{ inputs.source_artifact_name }}
         run: |
           set -euo pipefail
 
-          unzip -o work/submission.zip -d work/unpacked
           mkdir -p "${TARGET_DIR}"
 
-          mapfile -t GDS_FILES < <(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \))
+          # GDSII_MDP: 従来通り。単一の GDS ファイルを取り出し GDSII_MDP.gds として配置。
+          unzip -o "work/${SOURCE_ARTIFACT_NAME}.zip" -d "work/unpacked/${SOURCE_ARTIFACT_NAME}"
+
+          mapfile -t GDS_FILES < <(find "work/unpacked/${SOURCE_ARTIFACT_NAME}" -type f \( -name "*.gds" -o -name "*.gdsii" \))
 
           if [ "${#GDS_FILES[@]}" -ne 1 ]; then
             echo "Expected exactly one GDS file, found: ${#GDS_FILES[@]}"
@@ -123,6 +148,27 @@ jobs:
           fi
 
           cp "${GDS_FILES[0]}" "${TARGET_DIR}/GDSII_MDP.gds"
+
+          # GDSII_drawing / Extracted: 任意。ダウンロードされていれば ZIP を
+          # そのまま Target folder に展開して配置。manifest 記録用に、
+          # 展開されるファイル名の一覧を先に取得しておく。
+          DRAWING_FILES=""
+          if [ -f "work/GDSII_drawing.zip" ]; then
+            DRAWING_FILES=$(unzip -Z1 "work/GDSII_drawing.zip" | grep -v '/$' | paste -sd, -)
+            unzip -o "work/GDSII_drawing.zip" -d "${TARGET_DIR}"
+          else
+            echo "GDSII_drawing artifact not present. Skipping."
+          fi
+          echo "drawing_files=${DRAWING_FILES}" >> "$GITHUB_OUTPUT"
+
+          EXTRACTED_FILES=""
+          if [ -f "work/Extracted.zip" ]; then
+            EXTRACTED_FILES=$(unzip -Z1 "work/Extracted.zip" | grep -v '/$' | paste -sd, -)
+            unzip -o "work/Extracted.zip" -d "${TARGET_DIR}"
+          else
+            echo "Extracted artifact not present. Skipping."
+          fi
+          echo "extracted_files=${EXTRACTED_FILES}" >> "$GITHUB_OUTPUT"
 
       - name: Rename top cell
         run: |
@@ -143,6 +189,8 @@ jobs:
             --source-run-id "${{ inputs.source_run_id }}" \
             --source-artifact-name "${{ inputs.source_artifact_name }}" \
             --submission-sequence "${{ inputs.submission_sequence }}" \
+            --gdsii-drawing-files "${{ steps.extract.outputs.drawing_files }}" \
+            --extracted-files "${{ steps.extract.outputs.extracted_files }}" \
             --output "${{ steps.vars.outputs.target_dir }}/manifest.json"
 
       - name: Commit and push with retry
@@ -153,17 +201,17 @@ jobs:
           git config user.email "bot@opensusi.org"
 
           TARGET_DIR="${{ steps.vars.outputs.target_dir }}"
+          SOURCE_ARTIFACT_NAME="${{ inputs.source_artifact_name }}"
           COMMIT_MSG="Import ${{ inputs.github_id }} (${{ inputs.order_id }})"
 
           stage_outputs() {
-            git add -f "${TARGET_DIR}/GDSII_MDP.gds"
-            git add -f "${TARGET_DIR}/manifest.json"
+            git add -f "${TARGET_DIR}"
           }
 
           regenerate_outputs() {
             mkdir -p "${TARGET_DIR}"
 
-            mapfile -t GDS_FILES < <(find work/unpacked -type f \( -name "*.gds" -o -name "*.gdsii" \))
+            mapfile -t GDS_FILES < <(find "work/unpacked/${SOURCE_ARTIFACT_NAME}" -type f \( -name "*.gds" -o -name "*.gdsii" \))
 
             if [ "${#GDS_FILES[@]}" -ne 1 ]; then
               echo "Expected exactly one GDS file during retry, found: ${#GDS_FILES[@]}"
@@ -171,6 +219,18 @@ jobs:
             fi
 
             cp "${GDS_FILES[0]}" "${TARGET_DIR}/GDSII_MDP.gds"
+
+            DRAWING_FILES=""
+            if [ -f "work/GDSII_drawing.zip" ]; then
+              DRAWING_FILES=$(unzip -Z1 "work/GDSII_drawing.zip" | grep -v '/$' | paste -sd, -)
+              unzip -o "work/GDSII_drawing.zip" -d "${TARGET_DIR}"
+            fi
+
+            EXTRACTED_FILES=""
+            if [ -f "work/Extracted.zip" ]; then
+              EXTRACTED_FILES=$(unzip -Z1 "work/Extracted.zip" | grep -v '/$' | paste -sd, -)
+              unzip -o "work/Extracted.zip" -d "${TARGET_DIR}"
+            fi
 
             python3 scripts/rename_gds_top.py \
               --gds "${TARGET_DIR}/GDSII_MDP.gds" \
@@ -183,6 +243,8 @@ jobs:
               --source-run-id "${{ inputs.source_run_id }}" \
               --source-artifact-name "${{ inputs.source_artifact_name }}" \
               --submission-sequence "${{ inputs.submission_sequence }}" \
+              --gdsii-drawing-files "${DRAWING_FILES}" \
+              --extracted-files "${EXTRACTED_FILES}" \
               --output "${TARGET_DIR}/manifest.json"
           }
 
