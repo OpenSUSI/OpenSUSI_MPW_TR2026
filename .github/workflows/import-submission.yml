@@ -138,6 +138,8 @@ jobs:
           mkdir -p "${TARGET_DIR}"
 
           # GDSII_MDP: 従来通り。単一の GDS ファイルを取り出し GDSII_MDP.gds として配置。
+          # unzip -d は親ディレクトリを再帰的に作らないため、先に mkdir -p しておく。
+          mkdir -p "work/unpacked/${SOURCE_ARTIFACT_NAME}"
           unzip -o "work/${SOURCE_ARTIFACT_NAME}.zip" -d "work/unpacked/${SOURCE_ARTIFACT_NAME}"
 
           mapfile -t GDS_FILES < <(find "work/unpacked/${SOURCE_ARTIFACT_NAME}" -type f \( -name "*.gds" -o -name "*.gdsii" \))
