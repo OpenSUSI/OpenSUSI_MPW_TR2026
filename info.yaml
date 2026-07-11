@@ -67,7 +67,7 @@ xy_mark:
 
   lines:
     - "OPENSUSI"
-    - "2026-F"
+    - "2026-09"
     - "X{col}-Y{row}"
 
   # glyph library GDS
