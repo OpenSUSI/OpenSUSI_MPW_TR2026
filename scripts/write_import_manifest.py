@@ -16,10 +16,6 @@ def normalize_string(value: object) -> str:
     return str(value or "").strip()
 
 
-def parse_file_list(value: str) -> list[str]:
-    return [item.strip() for item in normalize_string(value).split(",") if item.strip()]
-
-
 def normalize_repo_name(value: str) -> str:
     raw = normalize_string(value)
     raw = re.sub(r"^https?://github\.com/", "", raw, flags=re.IGNORECASE)
@@ -66,8 +62,8 @@ def build_manifest(args: argparse.Namespace) -> dict:
         "normalizedRepoName": normalized_repo,
         "gdsFile": normalize_string(args.gds_file),
         "gdsTopCell": gds_top_cell,
-        "gdsiiDrawingFiles": parse_file_list(args.gdsii_drawing_files),
-        "extractedFiles": parse_file_list(args.extracted_files),
+        "gdsiiDrawingFiles": normalize_string(args.gdsii_drawing_files),
+        "extractedFiles": normalize_string(args.extracted_files),
     }
 
 
@@ -96,7 +92,9 @@ def validate_manifest(manifest: dict) -> None:
 
     # gdsiiDrawingFiles / extractedFiles are optional: the corresponding WIX
     # artifacts (GDSII_drawing / Extracted) may legitimately be absent, in
-    # which case these lists are empty.
+    # which case these fields are an empty string. Each artifact zip is
+    # expected to contain exactly one file, so these are plain strings
+    # rather than lists.
 
     submission_sequence = int(manifest["submissionSequence"])
 
@@ -164,8 +162,8 @@ def parse_args() -> argparse.Namespace:
         "--gdsii-drawing-files",
         default="",
         help=(
-            "Comma-separated list of file names placed in target_dir from the "
-            "GDSII_drawing artifact."
+            "File name placed in target_dir from the GDSII_drawing artifact "
+            "(empty if the artifact was not present)."
         ),
     )
 
@@ -173,8 +171,8 @@ def parse_args() -> argparse.Namespace:
         "--extracted-files",
         default="",
         help=(
-            "Comma-separated list of file names placed in target_dir from the "
-            "Extracted artifact."
+            "File name placed in target_dir from the Extracted artifact "
+            "(empty if the artifact was not present)."
         ),
     )
 
