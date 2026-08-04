@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260706-001837-01",
+  "submissionSequence": 6,
+  "githubId": "munetomo-maruyama",
+  "sourceRepo": "munetomo-maruyama/TR-1um_MPW_Sanken",
+  "sourceRunId": "30881391163",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "munetomo-maruyama/TR-1um_MPW_Sanken",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260706_001837_01",
+  "gdsiiDrawingFiles": "tr_1um_sanken.gds",
+  "extractedFiles": "tr_1um_sanken.extracted"
+}
