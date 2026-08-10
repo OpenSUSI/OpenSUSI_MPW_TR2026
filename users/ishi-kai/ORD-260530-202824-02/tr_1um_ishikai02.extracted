@@ -1,0 +1,286 @@
+* Created by KLayout
+*** My special header ***
+
+* cell tr_1um_ishikai02
+* pin VSS
+.SUBCKT tr_1um_ishikai02 VSS
+* cell instance $1 r0 *1 0,0
+X$1 \$3 \$5 \$2 \$1 \$7 \$9 \$6 \$8 VSS OSS_FRAME
+* cell instance $2 r0 *1 -46.6,-418.3
+X$2 \$7 \$9 \$8 \$5 \$6 \$3 \$1 \$2 VSS AM_Radio
+.ENDS tr_1um_ishikai02
+
+* cell AM_Radio
+* pin VDD
+* pin DETOUT
+* pin DETIN
+* pin RFINP
+* pin RFINN
+* pin RFOUT
+* pin VREF
+* pin iB
+* pin VSS
+.SUBCKT AM_Radio VDD DETOUT DETIN RFINP RFINN RFOUT VREF iB VSS
+* cell instance $1 r0 *1 915,853.45
+X$1 RFINP RFINN RFOUT \$62 VDD VSS cascode_opamp
+* cell instance $2 r0 *1 913.7,1114.95
+X$2 iB VDD \$60 \$62 VSS current_mirror
+* cell instance $6 r0 *1 105,1.95
+X$6 \$28 DETOUT VREF VDD \$60 DETIN VSS ideal_diode
+.ENDS AM_Radio
+
+* cell OSS_FRAME
+* pin P13
+* pin P11
+* pin P15
+* pin P14
+* pin VDD
+* pin P9
+* pin P12
+* pin P10
+* pin VSS
+.SUBCKT OSS_FRAME P13 P11 P15 P14 VDD P9 P12 P10 VSS
+* cell instance $1 r90 *1 1040,200
+X$1 P13 VDD VSS OSS_ESD_5V_ANA
+* cell instance $2 r90 *1 1040,-600
+X$2 P11 VDD VSS OSS_ESD_5V_ANA
+* cell instance $3 m45 *1 -1040,200
+X$3 P4 VDD VSS OSS_ESD_5V_ANA
+* cell instance $4 r180 *1 600,1040
+X$4 P15 VDD VSS OSS_ESD_5V_ANA
+* cell instance $5 m135 *1 1040,600
+X$5 P14 VDD VSS OSS_ESD_5V_ANA
+* cell instance $6 r270 *1 -1040,-200
+X$6 P5 VDD VSS OSS_ESD_5V_ANA
+* cell instance $10 m45 *1 -1040,-600
+X$10 P6 VDD VSS OSS_ESD_5V_ANA
+* cell instance $11 m135 *1 1040,-200
+X$11 P12 VDD VSS OSS_ESD_5V_ANA
+* cell instance $12 m90 *1 600,-1040
+X$12 P10 VDD VSS OSS_ESD_5V_ANA
+* cell instance $14 m0 *1 -600,1040
+X$14 P2 VDD VSS OSS_ESD_5V_ANA
+* cell instance $15 r270 *1 -1040,600
+X$15 P3 VDD VSS OSS_ESD_5V_ANA
+* cell instance $16 r180 *1 -200,1040
+X$16 P1 VDD VSS OSS_ESD_5V_ANA
+* cell instance $17 m0 *1 200,1040
+X$17 VDD VSS OSS_ESD_5V_VDD
+* cell instance $18 r0 *1 -600,-1040
+X$18 P7 VDD VSS OSS_ESD_5V_ANA
+* cell instance $19 r0 *1 200,-1040
+X$19 P9 VDD VSS OSS_ESD_5V_ANA
+* cell instance $20 m90 *1 -200,-1040
+X$20 VDD VSS OSS_ESD_5V_VSS
+.ENDS OSS_FRAME
+
+* cell current_mirror
+* pin IB
+* pin VDD
+* pin IB2
+* pin IB1
+* pin VSS
+.SUBCKT current_mirror IB VDD IB2 IB1 VSS
+* device instance $1 m45 *1 -593.2,-435.3 PMOS
+XM$1 VB2 IB \$20 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $2 r90 *1 -683,-435.3 PMOS
+XM$2 IB IB VB4 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $3 r90 *1 -683,-399 PMOS
+XM$3 VB4 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $4 m45 *1 -593.2,-399 PMOS
+XM$4 \$20 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $5 r90 *1 -593.1,-470 NMOS
+XM$5 VB1 VB2 VB2 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $6 m45 *1 -524.3,-470 NMOS
+XM$6 \$15 VB2 IB1 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $7 m45 *1 -459.9,-470.1 NMOS
+XM$7 \$19 VB2 IB2 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $8 r90 *1 -593.1,-489.8 NMOS
+XM$8 VSS VB1 VB1 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $9 m45 *1 -524.3,-489.8 NMOS
+XM$9 VSS VB1 \$15 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $10 m45 *1 -459.9,-489.9 NMOS
+XM$10 VSS VB1 \$19 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+.ENDS current_mirror
+
+* cell ideal_diode
+* pin 
+* pin VOUT
+* pin VREF
+* pin VDD
+* pin IB
+* pin VIN
+* pin VSS
+.SUBCKT ideal_diode \$1 VOUT VREF VDD IB VIN VSS
+* cell instance $13 r0 *1 810,590
+X$13 VIN VOUT \$1 IB VDD VSS cascode_opamp_2
+* device instance $1 r0 *1 676.3,-103.6 DP
+D$1 \$1 VOUT DP A=51.84p P=57.6u
+* device instance $5 r0 *1 676.3,-43.6 DP
+D$5 VREF \$1 DP A=51.84p P=57.6u
+* device instance $9 r0 *1 520,-60.7 F_RR
+XR$9 VOUT VREF VDD F_RR R=19.25 L=77u W=4u A=308p P=162u m=1
+* device instance $10 r90 *1 625.1,-60.7 F_CSIO
+XC$10 \$1 VOUT VSS F_CSIO C=5.4e-13 A=900p P=120u X=30 Y=30 m=1
+.ENDS ideal_diode
+
+* cell cascode_opamp
+* pin VIN_P
+* pin VIN_N
+* pin VOUT
+* pin IB
+* pin VDD
+* pin VSS
+.SUBCKT cascode_opamp VIN_P VIN_N VOUT IB VDD VSS
+* device instance $1 r90 *1 -152.8,-406.1 PMOS
+XM$1 VOUT IB VDD VDD PMOS L=1u W=300u AS=528p AD=528p PS=377.6u PD=377.6u
+* device instance $6 m45 *1 -306.7,-435.3 PMOS
+XM$6 NET11 IB \$59 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $7 r90 *1 -683,-435.3 PMOS
+XM$7 IB IB VB4 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $8 m45 *1 -593.2,-435.3 PMOS
+XM$8 VB2 IB \$61 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $9 r90 *1 -491.3,-435.3 PMOS
+XM$9 NET3 NET3 NET1 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $10 m45 *1 -401.5,-435.3 PMOS
+XM$10 OUT1 NET3 \$60 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $11 m45 *1 -593.2,-399 PMOS
+XM$11 \$61 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $12 m45 *1 -306.7,-399 PMOS
+XM$12 \$59 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $13 m45 *1 -401.5,-399 PMOS
+XM$13 \$60 NET1 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $14 r90 *1 -683,-399 PMOS
+XM$14 VB4 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $15 r90 *1 -491.3,-399 PMOS
+XM$15 NET1 NET1 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $16 r90 *1 -307.1,-549.1 NMOS
+XM$16 VSS NET8 NET8 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $17 r90 *1 -307.1,-509.8 NMOS
+XM$17 NET8 NET11 NET11 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $18 r90 *1 -230.4,-509.5 NMOS
+XM$18 NET7 NET11 OUT1 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $19 r90 *1 -402.2,-511.5 NMOS
+XM$19 \$25 VIN_P NET6 VSS NMOS L=1u W=80u AS=172p AD=172p PS=128.6u PD=128.6u
+* device instance $21 r90 *1 -491.3,-511.5 NMOS
+XM$21 \$24 VIN_N NET6 VSS NMOS L=1u W=80u AS=172p AD=172p PS=128.6u PD=128.6u
+* device instance $23 r90 *1 -152.4,-475.3 NMOS
+XM$23 VSS OUT1 VOUT VSS NMOS L=1u W=200u AS=352p AD=352p PS=257.6u PD=257.6u
+* device instance $28 r90 *1 -593.1,-489.8 NMOS
+XM$28 VSS VB1 VB1 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $29 r90 *1 -593.1,-470 NMOS
+XM$29 VB1 VB2 VB2 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $30 r90 *1 -445.5,-554.4 NMOS
+XM$30 VSS VB1 NET6 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $31 r90 *1 -491.4,-470 NMOS
+XM$31 \$24 VB2 NET3 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $32 r90 *1 -401.4,-470 NMOS
+XM$32 \$25 VB2 OUT1 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $33 r90 *1 -186,-539 F_CSIO
+XC$33 NET7 VOUT VSS F_CSIO C=5.4e-13 A=900p P=120u X=30 Y=30 m=1
+.ENDS cascode_opamp
+
+* cell OSS_ESD_5V_VDD
+* pin PAD,VDD
+* pin VSS
+.SUBCKT OSS_ESD_5V_VDD PAD|VDD VSS
+* cell instance $1 r90 *1 130,0
+X$1 PAD|VDD VSS OSS_NCH_ESD
+* cell instance $2 r270 *1 -130,0
+X$2 VSS PAD|VDD OSS_PCH_ESD
+.ENDS OSS_ESD_5V_VDD
+
+* cell OSS_ESD_5V_VSS
+* pin VDD
+* pin PAD,VSS
+.SUBCKT OSS_ESD_5V_VSS VDD PAD|VSS
+* cell instance $1 r90 *1 -130,0
+X$1 PAD|VSS VDD OSS_PCH_ESD
+* cell instance $2 r270 *1 130,0
+X$2 VDD PAD|VSS OSS_NCH_ESD
+.ENDS OSS_ESD_5V_VSS
+
+* cell OSS_ESD_5V_ANA
+* pin PAD
+* pin VDD
+* pin VSS
+.SUBCKT OSS_ESD_5V_ANA PAD VDD VSS
+* cell instance $2 r90 *1 130,0
+X$2 PAD VSS OSS_NCH_ESD
+* cell instance $3 r90 *1 -130,0
+X$3 PAD VDD OSS_PCH_ESD
+.ENDS OSS_ESD_5V_ANA
+
+* cell cascode_opamp_2
+* pin VIN_P
+* pin VIN_N
+* pin VOUT
+* pin IB
+* pin VDD
+* pin VSS
+.SUBCKT cascode_opamp_2 VIN_P VIN_N VOUT IB VDD VSS
+* device instance $1 r90 *1 -152.8,-406.1 PMOS
+XM$1 VOUT IB VDD VDD PMOS L=1u W=300u AS=528p AD=528p PS=377.6u PD=377.6u
+* device instance $6 m45 *1 -306.7,-435.3 PMOS
+XM$6 NET11 IB \$59 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $7 r90 *1 -683,-435.3 PMOS
+XM$7 IB IB VB4 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $8 m45 *1 -593.2,-435.3 PMOS
+XM$8 VB2 IB \$61 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $9 r90 *1 -491.3,-435.3 PMOS
+XM$9 NET3 NET3 NET1 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $10 m45 *1 -401.5,-435.3 PMOS
+XM$10 OUT1 NET3 \$60 VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $11 m45 *1 -593.2,-399 PMOS
+XM$11 \$61 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $12 m45 *1 -306.7,-399 PMOS
+XM$12 \$59 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $13 m45 *1 -401.5,-399 PMOS
+XM$13 \$60 NET1 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $14 r90 *1 -683,-399 PMOS
+XM$14 VB4 VB4 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $15 r90 *1 -491.3,-399 PMOS
+XM$15 NET1 NET1 VDD VDD PMOS L=1u W=30u AS=84p AD=84p PS=65.6u PD=65.6u
+* device instance $16 r90 *1 -307.1,-549.1 NMOS
+XM$16 VSS NET8 NET8 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $17 r90 *1 -307.1,-509.8 NMOS
+XM$17 NET8 NET11 NET11 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $18 r90 *1 -230.4,-509.5 NMOS
+XM$18 NET7 NET11 OUT1 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $19 r90 *1 -402.2,-511.5 NMOS
+XM$19 \$25 VIN_P NET6 VSS NMOS L=1u W=80u AS=172p AD=172p PS=128.6u PD=128.6u
+* device instance $21 r90 *1 -491.3,-511.5 NMOS
+XM$21 \$24 VIN_N NET6 VSS NMOS L=1u W=80u AS=172p AD=172p PS=128.6u PD=128.6u
+* device instance $23 r90 *1 -152.4,-475.3 NMOS
+XM$23 VSS OUT1 VOUT VSS NMOS L=1u W=200u AS=352p AD=352p PS=257.6u PD=257.6u
+* device instance $28 r90 *1 -593.1,-489.8 NMOS
+XM$28 VSS VB1 VB1 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $29 r90 *1 -593.1,-470 NMOS
+XM$29 VB1 VB2 VB2 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $30 r90 *1 -445.5,-554.4 NMOS
+XM$30 VSS VB1 NET6 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $31 r90 *1 -491.4,-470 NMOS
+XM$31 \$24 VB2 NET3 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $32 r90 *1 -401.4,-470 NMOS
+XM$32 \$25 VB2 OUT1 VSS NMOS L=1u W=10u AS=28p AD=28p PS=25.6u PD=25.6u
+* device instance $33 r90 *1 -186,-539 F_CSIO
+XC$33 NET7 VOUT VSS F_CSIO C=5.4e-13 A=900p P=120u X=30 Y=30 m=1
+.ENDS cascode_opamp_2
+
+* cell OSS_PCH_ESD
+* pin PAD
+* pin VDD
+.SUBCKT OSS_PCH_ESD PAD VDD
+* device instance $1 r0 *1 -65.5,0 PMOS
+XM$1 PAD VDD VDD VDD PMOS L=2u W=500u AS=3523.04p AD=3523.04p PS=689.36u
++ PD=689.36u
+.ENDS OSS_PCH_ESD
+
+* cell OSS_NCH_ESD
+* pin PAD
+* pin VSS
+.SUBCKT OSS_NCH_ESD PAD VSS
+* device instance $1 r0 *1 -65.5,0 NMOSE
+XM$1 PAD VSS VSS VSS NMOSE L=2u W=500u AS=3523.04p AD=3523.04p PS=689.36u
++ PD=689.36u
+.ENDS OSS_NCH_ESD
