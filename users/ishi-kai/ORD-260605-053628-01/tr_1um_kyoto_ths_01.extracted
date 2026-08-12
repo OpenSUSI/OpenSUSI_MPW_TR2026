@@ -1,0 +1,1264 @@
+* Created by KLayout
+*** My special header ***
+
+* cell tr_1um_kyoto_ths_01
+* pin P1
+* pin P10
+* pin P11
+* pin P12
+* pin P13
+* pin P14
+* pin P15
+* pin P2
+* pin P3
+* pin P4
+* pin P5
+* pin P6
+* pin P7
+* pin P9
+* pin VDD
+* pin VSS
+.SUBCKT tr_1um_kyoto_ths_01 P1 P10 P11 P12 P13 P14 P15 P2 P3 P4 P5 P6 P7 P9 VDD
++ VSS
+* cell instance $1 r0 *1 0,0
+X$1 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
+* cell instance $3 r0 *1 -475.6,210.4
+X$3 P4 P14 P6 P5 P7 VSS opamp_r2r_HK
+* cell instance $13 r0 *1 -424.6,-690.9
+X$13 P12 P13 P11 P10 P9 VSS opamp_r2r_yamazaki
+* cell instance $14 r0 *1 -460.3,634.1
+X$14 VDD P15 P3 P2 P1 VSS opamp_r2r_AK
+.ENDS tr_1um_kyoto_ths_01
+
+* cell opamp_r2r_yamazaki
+* pin OUT
+* pin VDD
+* pin INM
+* pin INP
+* pin VB
+* pin VSS
+.SUBCKT opamp_r2r_yamazaki OUT VDD INM INP VB VSS
+* cell instance $1 r0 *1 1028.8,8.1
+X$1 \$3 OUT VDD \$11 \$12 \$10 VSS opamp_r2r_ABAMP_yamazaki
+* cell instance $2 r0 *1 98.8,-1.3
+X$2 \$25 \$24 \$23 \$8 \$18 \$9 VB VDD VSS opamp_r2r_CS
+* cell instance $3 r0 *1 714.2,24.5
+X$3 \$15 \$14 \$3 \$25 \$10 \$9 \$12 \$8 VDD \$11 \$18 \$16 \$13 VSS
++ opamp_r2r_cascode
+* cell instance $11 r0 *1 292.3,27.5
+X$11 \$24 \$25 \$16 \$13 INM INP \$18 \$15 \$14 VDD \$23 VSS
++ opamp_r2r_diff_yamazaki
+.ENDS opamp_r2r_yamazaki
+
+* cell opamp_r2r_HK
+* pin VDD
+* pin OUT
+* pin INP
+* pin VB
+* pin INM
+* pin VSS
+.SUBCKT opamp_r2r_HK VDD OUT INP VB INM VSS
+* cell instance $1 r0 *1 6.3,-5.5
+X$1 \$21 \$I1 \$12 \$13 \$6 \$10 VB VDD VSS opamp_r2r_CS$1
+* cell instance $2 r0 *1 735.6,20.3
+X$2 \$19 \$17 \$5 \$21 \$15 \$10 \$4 \$13 VDD \$14 \$6 \$16 \$18 VSS
++ opamp_r2r_cascode$1
+* cell instance $13 r0 *1 236.4,55.5
+X$13 INM \$21 \$12 \$19 \$16 \$6 \$18 INP \$17 VDD \$I1 VSS opamp_r2r_diff_HK
+* cell instance $23 r0 *1 1123.9,42.7
+X$23 VDD OUT \$4 \$5 \$14 \$15 VSS opamp_r2r_ABAMP_HK
+.ENDS opamp_r2r_HK
+
+* cell opamp_r2r_AK
+* pin VDD
+* pin OUT
+* pin INP
+* pin INM
+* pin VB
+* pin VSS
+.SUBCKT opamp_r2r_AK VDD OUT INP INM VB VSS
+* cell instance $1 r0 *1 0,0
+X$1 \$10 \$18 \$22 \$11 \$20 \$7 VB VDD VSS opamp_r2r_CS$2
+* cell instance $2 r0 *1 602.8,25.8
+X$2 \$12 \$13 \$4 \$10 \$16 \$7 \$5 \$11 VDD \$15 \$20 \$6 \$14 VSS
++ opamp_r2r_cascode$2
+* cell instance $9 r0 *1 209.5,-40.8
+X$9 \$18 \$10 \$14 \$6 INP INM VDD \$13 \$12 \$20 \$22 VSS opamp_r2r_diff_AK
+* cell instance $16 r0 *1 728.5,96
+X$16 \$4 OUT VDD \$5 \$16 \$15 VSS opamp_r2r_ABAMP_AK
+.ENDS opamp_r2r_AK
+
+* cell OSS_FRAME
+* pin P13
+* pin P11
+* pin P4
+* pin P15
+* pin P14
+* pin P5
+* pin VDD
+* pin P2
+* pin P3
+* pin P7
+* pin P1
+* pin P6
+* pin P9
+* pin P12
+* pin P10
+* pin VSS
+.SUBCKT OSS_FRAME P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS
+* cell instance $1 r90 *1 1040,200
+X$1 P13 VDD VSS OSS_ESD_5V_ANA
+* cell instance $2 r90 *1 1040,-600
+X$2 P11 VDD VSS OSS_ESD_5V_ANA
+* cell instance $3 m45 *1 -1040,200
+X$3 P4 VDD VSS OSS_ESD_5V_ANA
+* cell instance $4 r180 *1 600,1040
+X$4 P15 VDD VSS OSS_ESD_5V_ANA
+* cell instance $5 m135 *1 1040,600
+X$5 P14 VDD VSS OSS_ESD_5V_ANA
+* cell instance $6 r270 *1 -1040,-200
+X$6 P5 VDD VSS OSS_ESD_5V_ANA
+* cell instance $10 m45 *1 -1040,-600
+X$10 P6 VDD VSS OSS_ESD_5V_ANA
+* cell instance $11 m135 *1 1040,-200
+X$11 P12 VDD VSS OSS_ESD_5V_ANA
+* cell instance $12 m90 *1 600,-1040
+X$12 P10 VDD VSS OSS_ESD_5V_ANA
+* cell instance $14 m0 *1 -600,1040
+X$14 P2 VDD VSS OSS_ESD_5V_ANA
+* cell instance $15 r270 *1 -1040,600
+X$15 P3 VDD VSS OSS_ESD_5V_ANA
+* cell instance $16 r180 *1 -200,1040
+X$16 P1 VDD VSS OSS_ESD_5V_ANA
+* cell instance $17 m0 *1 200,1040
+X$17 VDD VSS OSS_ESD_5V_VDD
+* cell instance $18 r0 *1 -600,-1040
+X$18 P7 VDD VSS OSS_ESD_5V_ANA
+* cell instance $19 r0 *1 200,-1040
+X$19 P9 VDD VSS OSS_ESD_5V_ANA
+* cell instance $20 m90 *1 -200,-1040
+X$20 VDD VSS OSS_ESD_5V_VSS
+.ENDS OSS_FRAME
+
+* cell opamp_r2r_ABAMP_yamazaki
+* pin AB_N
+* pin OUT
+* pin VDD
+* pin CAP_P
+* pin AB_P
+* pin CAP_N
+* pin VSS
+.SUBCKT opamp_r2r_ABAMP_yamazaki AB_N OUT VDD CAP_P AB_P CAP_N VSS
+* device instance $1 r0 *1 -36.1,21.6 PMOS
+XM$1 VDD AB_P OUT VDD PMOS L=4u W=576u AS=895.2p AD=895.2p PS=674.6u PD=674.6u
+* device instance $25 r0 *1 5.9,-51.3 NMOS
+XM$25 VSS AB_N OUT VSS NMOS L=4u W=288u AS=463.2p AD=463.2p PS=350.6u PD=350.6u
+* device instance $37 r90 *1 -209,-64.7 F_CSIO
+XC$37 CAP_N OUT VSS F_CSIO C=3.897816e-12 A=6496.36p P=322.4u X=80.5999990463
++ Y=80.6000009537 m=2
+* device instance $39 r90 *1 -109.6,34.7 F_CSIO
+XC$39 CAP_P OUT VSS F_CSIO C=3.897816e-12 A=6496.36p P=322.4u X=80.5999990463
++ Y=80.6000009537 m=2
+.ENDS opamp_r2r_ABAMP_yamazaki
+
+* cell opamp_r2r_cascode
+* pin INP_P
+* pin INM_P
+* pin AB_N
+* pin BNI
+* pin CAP_N
+* pin BNF
+* pin AB_P
+* pin BPF
+* pin VDD
+* pin CAP_P
+* pin BPI
+* pin INP_N
+* pin INM_N
+* pin VSS
+.SUBCKT opamp_r2r_cascode INP_P INM_P AB_N BNI CAP_N BNF AB_P BPF VDD CAP_P BPI
++ INP_N INM_N VSS
+* cell instance $1 m90 *1 -126,-100
+X$1 AB_N INP_P BNI VSS NFET_CASCODE_MID
+* cell instance $2 r0 *1 -30,-50
+X$2 CAP_N \$12 INP_P VSS NFET_PHESE
+* cell instance $3 m90 *1 -112,-150
+X$3 INP_P \$6 VSS VSS NFET_CASCODE_BOTTOM
+* cell instance $4 r0 *1 -60,-150
+X$4 VSS INP_P VSS VSS NFET_ZEROCAN
+* cell instance $11 r0 *1 -196,-150
+X$11 INM_P \$6 VSS VSS NFET_CASCODE_BOTTOM
+* cell instance $12 r0 *1 -182,-100
+X$12 \$6 INM_P BNI VSS NFET_CASCODE_MID
+* cell instance $15 r0 *1 -30,-100
+X$15 \$12 \$5 \$12 VSS NFET_ZEROCAN
+* cell instance $16 r0 *1 -30,-150
+X$16 \$5 VSS \$5 VSS NFET_ZEROCAN
+* cell instance $17 m90 *1 -160,0
+X$17 VDD \$20 \$6 BPF PFET_CASCODE_BOTTOM
+* cell instance $18 r0 *1 -240,0
+X$18 VDD \$20 \$6 VDD PFET_CASCODE_BOTTOM
+* cell instance $19 r0 *1 -221,-50
+X$19 VSS \$6 \$20 VSS NFET_CASCODE_TOP
+* cell instance $21 m90 *1 -179,-50
+X$21 BNF \$6 \$20 VSS NFET_CASCODE_TOP
+* cell instance $23 m90 *1 -68,0
+X$23 VDD AB_P AB_N VDD PFET_CASCODE_BOTTOM
+* cell instance $24 r0 *1 -148,0
+X$24 VDD AB_P AB_N BPF PFET_CASCODE_BOTTOM
+* cell instance $25 r0 *1 10,-100
+X$25 AB_N VSS \$13 VSS NFET_ZEROCAN
+* cell instance $26 m90 *1 -87,-50
+X$26 VSS AB_N AB_P VSS NFET_CASCODE_TOP
+* cell instance $27 r0 *1 -129,-50
+X$27 BNF AB_N AB_P VSS NFET_CASCODE_TOP
+* cell instance $30 r0 *1 -50,45
+X$30 VDD VDD \$12 AB_P PFET_ZEROCAN
+* cell instance $33 r0 *1 -50,0
+X$33 INP_N VDD CAP_P \$13 PFET_PHESE
+* cell instance $34 r0 *1 -4,45
+X$34 VDD \$53 \$13 \$13 PFET_ZEROCAN
+* cell instance $37 r0 *1 -208,45
+X$37 INM_N VDD BPI \$20 PFET_CASCODE_MID
+* cell instance $38 r0 *1 -236,90
+X$38 VDD VDD INM_N \$20 PFET_CASCODE_TOP
+* cell instance $39 m90 *1 -72,90
+X$39 VDD VDD INP_N \$20 PFET_CASCODE_TOP
+* cell instance $51 m90 *1 -100,45
+X$51 INP_N VDD BPI AB_P PFET_CASCODE_MID
+* cell instance $58 r0 *1 -4,90
+X$58 VDD VDD \$53 \$53 PFET_ZEROCAN
+* cell instance $59 r0 *1 -60,90
+X$59 VDD VDD INP_N VDD PFET_ZEROCAN
+.ENDS opamp_r2r_cascode
+
+* cell opamp_r2r_diff_yamazaki
+* pin BNO
+* pin BNI
+* pin INP_N
+* pin INM_N
+* pin INM
+* pin INP
+* pin BPI
+* pin INP_P
+* pin INM_P
+* pin VDD
+* pin BPO
+* pin VSS
+.SUBCKT opamp_r2r_diff_yamazaki BNO BNI INP_N INM_N INM INP BPI INP_P INM_P VDD
++ BPO VSS
+* device instance $1 r0 *1 52.9,20 PMOS
+XM$1 INM_P INM \$53 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $5 r0 *1 -10.5,20 PMOS
+XM$5 INP_P INP \$53 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $9 r0 *1 -10.5,60 PMOS
+XM$9 \$53 BPI \$66 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $13 r0 *1 52.9,60 PMOS
+XM$13 \$53 BPI \$67 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $17 r0 *1 -10.5,100 PMOS
+XM$17 VDD BPO \$66 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $21 r0 *1 52.9,100 PMOS
+XM$21 VDD BPO \$67 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $25 r0 *1 -3.5,-120 NMOS
+XM$25 \$2 BNO VSS VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $27 r0 *1 -3.5,-80 NMOS
+XM$27 \$2 BNI \$16 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $29 r0 *1 59.9,-80 NMOS
+XM$29 \$3 BNI \$16 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $31 r0 *1 59.9,-120 NMOS
+XM$31 \$3 BNO VSS VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $33 r0 *1 -3.5,-40 NMOS
+XM$33 \$16 INP INP_N VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $35 r0 *1 59.9,-40 NMOS
+XM$35 \$16 INM INM_N VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS opamp_r2r_diff_yamazaki
+
+* cell opamp_r2r_CS
+* pin BNI
+* pin BNO
+* pin BPO
+* pin BPF
+* pin BPI
+* pin BNF
+* pin VB
+* pin VDD
+* pin VSS
+.SUBCKT opamp_r2r_CS BNI BNO BPO BPF BPI BNF VB VDD VSS
+* cell instance $1 r0 *1 -240.2,-130.4
+X$1 VSS \$6 BNI VSS NFET_CS_BOTTOM
+* cell instance $2 r0 *1 -194.1,-87.6
+X$2 BNO BNI \$9 VSS NFET_CS_TOP
+* cell instance $3 r0 *1 -240.2,39
+X$3 VDD VDD BNI VB PFET_CS_BOTTOM
+* cell instance $4 r0 *1 5.2,-87.6
+X$4 \$22 BNI \$5 VSS NFET_CS_TOP
+* cell instance $5 r0 *1 -101,-87.6
+X$5 BPI BNI \$8 VSS NFET_CS_TOP
+* cell instance $6 r0 *1 -54.8,-87.6
+X$6 BPO BNI \$7 VSS NFET_CS_TOP
+* cell instance $7 r0 *1 65.2,-87.6
+X$7 BPF BNI \$4 VSS NFET_CS_TOP
+* cell instance $8 r0 *1 -240.2,-44.8
+X$8 \$13 BNI BNI VSS NFET_CS_BOTTOM
+* cell instance $9 r0 *1 -240.2,-87.6
+X$9 \$13 \$6 BNI VSS NFET_CS_BOTTOM
+* cell instance $10 r0 *1 -267.3,-44.8
+X$10 VSS BNI VSS VSS NFET_CS_BOTTOM
+* cell instance $11 m90 *1 -160,39
+X$11 VDD VDD BNO VB PFET_CS_BOTTOM
+* cell instance $12 r0 *1 65.2,-130.4
+X$12 VSS BNO \$4 VSS NFET_CS_TOP
+* cell instance $13 r0 *1 -54.8,-130.4
+X$13 VSS BNO \$7 VSS NFET_CS_TOP
+* cell instance $14 r0 *1 -101,-130.4
+X$14 VSS BNO \$8 VSS NFET_CS_TOP
+* cell instance $15 r0 *1 -194.1,-130.4
+X$15 VSS BNO \$9 VSS NFET_CS_TOP
+* cell instance $20 r0 *1 5.2,-130.4
+X$20 VSS \$22 \$5 VSS NFET_CS_TOP
+* cell instance $41 r0 *1 -54.8,39
+X$41 \$43 VDD BPI BPO PFET_CS_TOP
+* cell instance $42 r0 *1 5.2,81
+X$42 VDD VDD BPO \$44 PFET_CS_TOP
+* cell instance $43 r0 *1 -54.8,81
+X$43 VDD VDD BPO \$43 PFET_CS_TOP
+* cell instance $48 r0 *1 65.2,0
+X$48 \$38 VDD BPF BPF PFET_CS_TOP
+* cell instance $49 r0 *1 5.2,-44.8
+X$49 BNF BNF \$22 VSS NFET_CS_TOP
+* cell instance $52 r0 *1 -148,0
+X$52 VDD VDD BPI VDD PFET_CS_BOTTOM
+* cell instance $53 r0 *1 -101,0
+X$53 VDD \$51 BPI BPI PFET_CS_BOTTOM
+* cell instance $54 r0 *1 65.2,39
+X$54 \$45 VDD BPI \$38 PFET_CS_TOP
+* cell instance $55 r0 *1 5.2,39
+X$55 \$44 VDD BPI BNF PFET_CS_TOP
+* cell instance $56 r0 *1 -101,81
+X$56 VDD VDD \$56 BPI PFET_CS_BOTTOM
+* cell instance $57 r0 *1 -101,39
+X$57 VDD \$56 \$51 BPI PFET_CS_BOTTOM
+* cell instance $70 r0 *1 65.2,81
+X$70 VDD VDD \$38 \$45 PFET_CS_TOP
+.ENDS opamp_r2r_CS
+
+* cell opamp_r2r_ABAMP_HK
+* pin VDD
+* pin OUT
+* pin AB_P
+* pin AB_N
+* pin CAP_P
+* pin CAP_N
+* pin VSS
+.SUBCKT opamp_r2r_ABAMP_HK VDD OUT AB_P AB_N CAP_P CAP_N VSS
+* device instance $1 r0 *1 -83.6,8.5 PMOS
+XM$1 VDD AB_P OUT VDD PMOS L=4u W=576u AS=895.2p AD=895.2p PS=674.6u PD=674.6u
+* device instance $25 r0 *1 -41.6,-67.3 NMOS
+XM$25 VSS AB_N OUT VSS NMOS L=4u W=288u AS=463.2p AD=463.2p PS=350.6u PD=350.6u
+* device instance $37 r90 *1 -183.8,17.1 F_CSIO
+XC$37 CAP_P OUT VSS F_CSIO C=3.897816e-12 A=6496.36p P=322.4u X=80.5999990463
++ Y=80.6000009537 m=2
+* device instance $38 r90 *1 -283.2,-82.3 F_CSIO
+XC$38 CAP_N OUT VSS F_CSIO C=3.897816e-12 A=6496.36p P=322.4u X=80.5999990463
++ Y=80.6000009537 m=2
+.ENDS opamp_r2r_ABAMP_HK
+
+* cell opamp_r2r_cascode$1
+* pin INP_P
+* pin INM_P
+* pin AB_N
+* pin BNI
+* pin CAP_N
+* pin BNF
+* pin AB_P
+* pin BPF
+* pin 
+* pin CAP_P
+* pin BPI
+* pin INP_N
+* pin INM_N
+* pin VSS
+.SUBCKT opamp_r2r_cascode$1 INP_P INM_P AB_N BNI CAP_N BNF AB_P BPF \$30 CAP_P
++ BPI INP_N INM_N VSS
+* cell instance $1 m90 *1 -126,-100
+X$1 AB_N INP_P BNI VSS NFET_CASCODE_MID$1
+* cell instance $2 r0 *1 -30,-50
+X$2 CAP_N \$12 INP_P VSS NFET_PHESE$1
+* cell instance $3 m90 *1 -112,-150
+X$3 INP_P \$6 VSS VSS NFET_CASCODE_BOTTOM$1
+* cell instance $4 r0 *1 -60,-150
+X$4 VSS INP_P VSS VSS NFET_ZEROCAN$1
+* cell instance $11 r0 *1 -196,-150
+X$11 INM_P \$6 VSS VSS NFET_CASCODE_BOTTOM$1
+* cell instance $12 r0 *1 -182,-100
+X$12 \$6 INM_P BNI VSS NFET_CASCODE_MID$1
+* cell instance $15 r0 *1 -30,-100
+X$15 \$12 \$5 \$12 VSS NFET_ZEROCAN$1
+* cell instance $16 r0 *1 -30,-150
+X$16 \$5 VSS \$5 VSS NFET_ZEROCAN$1
+* cell instance $17 m90 *1 -160,0
+X$17 \$30 \$20 \$6 BPF PFET_CASCODE_BOTTOM$1
+* cell instance $18 r0 *1 -240,0
+X$18 \$30 \$20 \$6 \$30 PFET_CASCODE_BOTTOM$1
+* cell instance $19 r0 *1 -221,-50
+X$19 VSS \$6 \$20 VSS NFET_CASCODE_TOP$1
+* cell instance $21 m90 *1 -179,-50
+X$21 BNF \$6 \$20 VSS NFET_CASCODE_TOP$1
+* cell instance $23 m90 *1 -68,0
+X$23 \$30 AB_P AB_N \$30 PFET_CASCODE_BOTTOM$1
+* cell instance $24 r0 *1 -148,0
+X$24 \$30 AB_P AB_N BPF PFET_CASCODE_BOTTOM$1
+* cell instance $25 r0 *1 10,-100
+X$25 AB_N VSS \$13 VSS NFET_ZEROCAN$1
+* cell instance $26 m90 *1 -87,-50
+X$26 VSS AB_N AB_P VSS NFET_CASCODE_TOP$1
+* cell instance $27 r0 *1 -129,-50
+X$27 BNF AB_N AB_P VSS NFET_CASCODE_TOP$1
+* cell instance $30 r0 *1 -50,45
+X$30 \$30 \$30 \$12 AB_P PFET_ZEROCAN$1
+* cell instance $33 r0 *1 -50,0
+X$33 INP_N \$30 CAP_P \$13 PFET_PHESE$1
+* cell instance $34 r0 *1 -4,45
+X$34 \$30 \$53 \$13 \$13 PFET_ZEROCAN$1
+* cell instance $37 r0 *1 -208,45
+X$37 INM_N \$30 BPI \$20 PFET_CASCODE_MID$1
+* cell instance $38 r0 *1 -236,90
+X$38 \$30 \$30 INM_N \$20 PFET_CASCODE_TOP$1
+* cell instance $39 m90 *1 -72,90
+X$39 \$30 \$30 INP_N \$20 PFET_CASCODE_TOP$1
+* cell instance $51 m90 *1 -100,45
+X$51 INP_N \$30 BPI AB_P PFET_CASCODE_MID$1
+* cell instance $58 r0 *1 -4,90
+X$58 \$30 \$30 \$53 \$53 PFET_ZEROCAN$1
+* cell instance $59 r0 *1 -60,90
+X$59 \$30 \$30 INP_N \$30 PFET_ZEROCAN$1
+.ENDS opamp_r2r_cascode$1
+
+* cell opamp_r2r_diff_HK
+* pin INM
+* pin BNI
+* pin BPO
+* pin INP_P
+* pin INP_N
+* pin BPI
+* pin INM_N
+* pin INP
+* pin INM_P
+* pin VDD
+* pin BNO
+* pin VSS
+.SUBCKT opamp_r2r_diff_HK INM BNI BPO INP_P INP_N BPI INM_N INP INM_P VDD BNO
++ VSS
+* cell instance $1 m90 *1 150,-20
+X$1 VDD INM_P BPO BPI INM \$1 \$1 \$1 PFET_STD
+* cell instance $2 r0 *1 -20,-20
+X$2 VDD INP_P BPO BPI INP \$1 \$1 \$1 PFET_STD
+* cell instance $10 r0 *1 6.6,-193.8
+X$10 \$6 \$6 \$3 INP_N INP INP BNO BNO BNI VSS BNI VSS \$3 \$3 NFET_STD_3
+* device instance $1 r0 *1 111.6,-49.8 NMOS
+XM$1 \$3 INM INM_N VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $3 r0 *1 111.7,-117.7 NMOS
+XM$3 \$5 BNI \$3 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+* device instance $5 r0 *1 111.3,-171.8 NMOS
+XM$5 \$5 BNO VSS VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS opamp_r2r_diff_HK
+
+* cell opamp_r2r_CS$1
+* pin BNI
+* pin BNO
+* pin BPO
+* pin BPF
+* pin BPI
+* pin BNF
+* pin VB
+* pin VDD
+* pin VSS
+.SUBCKT opamp_r2r_CS$1 BNI BNO BPO BPF BPI BNF VB VDD VSS
+* cell instance $1 r0 *1 -240.2,-130.4
+X$1 VSS \$6 BNI VSS NFET_CS_BOTTOM$1
+* cell instance $2 r0 *1 -194.1,-87.6
+X$2 BNO BNI \$9 VSS NFET_CS_TOP$1
+* cell instance $3 r0 *1 -240.2,39
+X$3 VDD VDD BNI VB PFET_CS_BOTTOM$1
+* cell instance $4 r0 *1 5.2,-87.6
+X$4 \$22 BNI \$5 VSS NFET_CS_TOP$1
+* cell instance $5 r0 *1 -101,-87.6
+X$5 BPI BNI \$8 VSS NFET_CS_TOP$1
+* cell instance $6 r0 *1 -54.8,-87.6
+X$6 BPO BNI \$7 VSS NFET_CS_TOP$1
+* cell instance $7 r0 *1 65.2,-87.6
+X$7 BPF BNI \$4 VSS NFET_CS_TOP$1
+* cell instance $8 r0 *1 -240.2,-44.8
+X$8 \$13 BNI BNI VSS NFET_CS_BOTTOM$1
+* cell instance $9 r0 *1 -240.2,-87.6
+X$9 \$13 \$6 BNI VSS NFET_CS_BOTTOM$1
+* cell instance $10 r0 *1 -267.3,-44.8
+X$10 VSS BNI VSS VSS NFET_CS_BOTTOM$1
+* cell instance $11 m90 *1 -160,39
+X$11 VDD VDD BNO VB PFET_CS_BOTTOM$1
+* cell instance $12 r0 *1 65.2,-130.4
+X$12 VSS BNO \$4 VSS NFET_CS_TOP$1
+* cell instance $13 r0 *1 -54.8,-130.4
+X$13 VSS BNO \$7 VSS NFET_CS_TOP$1
+* cell instance $14 r0 *1 -101,-130.4
+X$14 VSS BNO \$8 VSS NFET_CS_TOP$1
+* cell instance $15 r0 *1 -194.1,-130.4
+X$15 VSS BNO \$9 VSS NFET_CS_TOP$1
+* cell instance $20 r0 *1 5.2,-130.4
+X$20 VSS \$22 \$5 VSS NFET_CS_TOP$1
+* cell instance $41 r0 *1 -54.8,39
+X$41 \$43 VDD BPI BPO PFET_CS_TOP$1
+* cell instance $42 r0 *1 5.2,81
+X$42 VDD VDD BPO \$44 PFET_CS_TOP$1
+* cell instance $43 r0 *1 -54.8,81
+X$43 VDD VDD BPO \$43 PFET_CS_TOP$1
+* cell instance $48 r0 *1 65.2,0
+X$48 \$38 VDD BPF BPF PFET_CS_TOP$1
+* cell instance $49 r0 *1 5.2,-44.8
+X$49 BNF BNF \$22 VSS NFET_CS_TOP$1
+* cell instance $52 r0 *1 -148,0
+X$52 VDD VDD BPI VDD PFET_CS_BOTTOM$1
+* cell instance $53 r0 *1 -101,0
+X$53 VDD \$51 BPI BPI PFET_CS_BOTTOM$1
+* cell instance $54 r0 *1 65.2,39
+X$54 \$45 VDD BPI \$38 PFET_CS_TOP$1
+* cell instance $55 r0 *1 5.2,39
+X$55 \$44 VDD BPI BNF PFET_CS_TOP$1
+* cell instance $56 r0 *1 -101,81
+X$56 VDD VDD \$56 BPI PFET_CS_BOTTOM$1
+* cell instance $57 r0 *1 -101,39
+X$57 VDD \$56 \$51 BPI PFET_CS_BOTTOM$1
+* cell instance $70 r0 *1 65.2,81
+X$70 VDD VDD \$38 \$45 PFET_CS_TOP$1
+.ENDS opamp_r2r_CS$1
+
+* cell opamp_r2r_ABAMP_AK
+* pin AB_N
+* pin OUT
+* pin VDD
+* pin AB_P
+* pin CAP_N
+* pin CAP_P
+* pin VSS
+.SUBCKT opamp_r2r_ABAMP_AK AB_N OUT VDD AB_P CAP_N CAP_P VSS
+* device instance $1 r0 *1 210.1,-13.5 PMOS
+XM$1 VDD AB_P OUT VDD PMOS L=4u W=576u AS=887.4p AD=887.4p PS=692.6u PD=692.6u
+* device instance $33 r0 *1 252.2,-105.2 NMOS
+XM$33 VSS AB_N OUT VSS NMOS L=4u W=288u AS=455.4p AD=455.4p PS=356.6u PD=356.6u
+* device instance $49 r90 *1 -4.9,-108.9 F_CSIO
+XC$49 CAP_N OUT VSS F_CSIO C=3.897816e-12 A=6496.36p P=322.4u X=80.5999990463
++ Y=80.6000009537 m=2
+* device instance $50 r90 *1 -4.9,-2.7 F_CSIO
+XC$50 CAP_P OUT VSS F_CSIO C=3.897816e-12 A=6496.36p P=322.4u X=80.5999990463
++ Y=80.6000009537 m=2
+.ENDS opamp_r2r_ABAMP_AK
+
+* cell opamp_r2r_cascode$2
+* pin INP_P
+* pin INM_P
+* pin AB_N
+* pin BNI
+* pin CAP_N
+* pin BNF
+* pin AB_P
+* pin BPF
+* pin VDD
+* pin CAP_P
+* pin BPI
+* pin INP_N
+* pin INM_N
+* pin VSS
+.SUBCKT opamp_r2r_cascode$2 INP_P INM_P AB_N BNI CAP_N BNF AB_P BPF VDD CAP_P
++ BPI INP_N INM_N VSS
+* cell instance $1 m90 *1 -126,-100
+X$1 AB_N INP_P BNI VSS NFET_CASCODE_MID$2
+* cell instance $2 r0 *1 -30,-50
+X$2 CAP_N \$12 INP_P VSS NFET_PHESE$2
+* cell instance $3 m90 *1 -112,-150
+X$3 INP_P \$6 VSS VSS NFET_CASCODE_BOTTOM$2
+* cell instance $4 r0 *1 -60,-150
+X$4 VSS INP_P VSS VSS NFET_ZEROCAN$2
+* cell instance $11 r0 *1 -196,-150
+X$11 INM_P \$6 VSS VSS NFET_CASCODE_BOTTOM$2
+* cell instance $12 r0 *1 -182,-100
+X$12 \$6 INM_P BNI VSS NFET_CASCODE_MID$2
+* cell instance $15 r0 *1 -30,-100
+X$15 \$12 \$5 \$12 VSS NFET_ZEROCAN$2
+* cell instance $16 r0 *1 -30,-150
+X$16 \$5 VSS \$5 VSS NFET_ZEROCAN$2
+* cell instance $17 m90 *1 -160,0
+X$17 VDD \$20 \$6 BPF PFET_CASCODE_BOTTOM$2
+* cell instance $18 r0 *1 -240,0
+X$18 VDD \$20 \$6 VDD PFET_CASCODE_BOTTOM$2
+* cell instance $19 r0 *1 -221,-50
+X$19 VSS \$6 \$20 VSS NFET_CASCODE_TOP$2
+* cell instance $21 m90 *1 -179,-50
+X$21 BNF \$6 \$20 VSS NFET_CASCODE_TOP$2
+* cell instance $23 m90 *1 -68,0
+X$23 VDD AB_P AB_N VDD PFET_CASCODE_BOTTOM$2
+* cell instance $24 r0 *1 -148,0
+X$24 VDD AB_P AB_N BPF PFET_CASCODE_BOTTOM$2
+* cell instance $25 r0 *1 10,-100
+X$25 AB_N VSS \$13 VSS NFET_ZEROCAN$2
+* cell instance $26 m90 *1 -87,-50
+X$26 VSS AB_N AB_P VSS NFET_CASCODE_TOP$2
+* cell instance $27 r0 *1 -129,-50
+X$27 BNF AB_N AB_P VSS NFET_CASCODE_TOP$2
+* cell instance $30 r0 *1 -50,45
+X$30 VDD VDD \$12 AB_P PFET_ZEROCAN$2
+* cell instance $33 r0 *1 -50,0
+X$33 INP_N VDD CAP_P \$13 PFET_PHESE$2
+* cell instance $34 r0 *1 -4,45
+X$34 VDD \$53 \$13 \$13 PFET_ZEROCAN$2
+* cell instance $37 r0 *1 -208,45
+X$37 INM_N VDD BPI \$20 PFET_CASCODE_MID$2
+* cell instance $38 r0 *1 -236,90
+X$38 VDD VDD INM_N \$20 PFET_CASCODE_TOP$2
+* cell instance $39 m90 *1 -72,90
+X$39 VDD VDD INP_N \$20 PFET_CASCODE_TOP$2
+* cell instance $51 m90 *1 -100,45
+X$51 INP_N VDD BPI AB_P PFET_CASCODE_MID$2
+* cell instance $58 r0 *1 -4,90
+X$58 VDD VDD \$53 \$53 PFET_ZEROCAN$2
+* cell instance $59 r0 *1 -60,90
+X$59 VDD VDD INP_N VDD PFET_ZEROCAN$2
+.ENDS opamp_r2r_cascode$2
+
+* cell opamp_r2r_CS$2
+* pin BNI
+* pin BNO
+* pin BPO
+* pin BPF
+* pin BPI
+* pin BNF
+* pin VB
+* pin VDD
+* pin VSS
+.SUBCKT opamp_r2r_CS$2 BNI BNO BPO BPF BPI BNF VB VDD VSS
+* cell instance $1 r0 *1 -240.2,-130.4
+X$1 VSS \$6 BNI VSS NFET_CS_BOTTOM$2
+* cell instance $2 r0 *1 -194.1,-87.6
+X$2 BNO BNI \$9 VSS NFET_CS_TOP$2
+* cell instance $3 r0 *1 -240.2,39
+X$3 VDD VDD BNI VB PFET_CS_BOTTOM$2
+* cell instance $4 r0 *1 5.2,-87.6
+X$4 \$22 BNI \$5 VSS NFET_CS_TOP$2
+* cell instance $5 r0 *1 -101,-87.6
+X$5 BPI BNI \$8 VSS NFET_CS_TOP$2
+* cell instance $6 r0 *1 -54.8,-87.6
+X$6 BPO BNI \$7 VSS NFET_CS_TOP$2
+* cell instance $7 r0 *1 65.2,-87.6
+X$7 BPF BNI \$4 VSS NFET_CS_TOP$2
+* cell instance $8 r0 *1 -240.2,-44.8
+X$8 \$13 BNI BNI VSS NFET_CS_BOTTOM$2
+* cell instance $9 r0 *1 -240.2,-87.6
+X$9 \$13 \$6 BNI VSS NFET_CS_BOTTOM$2
+* cell instance $10 r0 *1 -267.3,-44.8
+X$10 VSS BNI VSS VSS NFET_CS_BOTTOM$2
+* cell instance $11 m90 *1 -160,39
+X$11 VDD VDD BNO VB PFET_CS_BOTTOM$2
+* cell instance $12 r0 *1 65.2,-130.4
+X$12 VSS BNO \$4 VSS NFET_CS_TOP$2
+* cell instance $13 r0 *1 -54.8,-130.4
+X$13 VSS BNO \$7 VSS NFET_CS_TOP$2
+* cell instance $14 r0 *1 -101,-130.4
+X$14 VSS BNO \$8 VSS NFET_CS_TOP$2
+* cell instance $15 r0 *1 -194.1,-130.4
+X$15 VSS BNO \$9 VSS NFET_CS_TOP$2
+* cell instance $20 r0 *1 5.2,-130.4
+X$20 VSS \$22 \$5 VSS NFET_CS_TOP$2
+* cell instance $41 r0 *1 -54.8,39
+X$41 \$43 VDD BPI BPO PFET_CS_TOP$2
+* cell instance $42 r0 *1 5.2,81
+X$42 VDD VDD BPO \$44 PFET_CS_TOP$2
+* cell instance $43 r0 *1 -54.8,81
+X$43 VDD VDD BPO \$43 PFET_CS_TOP$2
+* cell instance $48 r0 *1 65.2,0
+X$48 \$38 VDD BPF BPF PFET_CS_TOP$2
+* cell instance $49 r0 *1 5.2,-44.8
+X$49 BNF BNF \$22 VSS NFET_CS_TOP$2
+* cell instance $52 r0 *1 -148,0
+X$52 VDD VDD BPI VDD PFET_CS_BOTTOM$2
+* cell instance $53 r0 *1 -101,0
+X$53 VDD \$51 BPI BPI PFET_CS_BOTTOM$2
+* cell instance $54 r0 *1 65.2,39
+X$54 \$45 VDD BPI \$38 PFET_CS_TOP$2
+* cell instance $55 r0 *1 5.2,39
+X$55 \$44 VDD BPI BNF PFET_CS_TOP$2
+* cell instance $56 r0 *1 -101,81
+X$56 VDD VDD \$56 BPI PFET_CS_BOTTOM$2
+* cell instance $57 r0 *1 -101,39
+X$57 VDD \$56 \$51 BPI PFET_CS_BOTTOM$2
+* cell instance $70 r0 *1 65.2,81
+X$70 VDD VDD \$38 \$45 PFET_CS_TOP$2
+.ENDS opamp_r2r_CS$2
+
+* cell opamp_r2r_diff_AK
+* pin bno
+* pin bni
+* pin INM_N
+* pin INP_N
+* pin inM
+* pin INP
+* pin VDD
+* pin INP_P
+* pin INM_P
+* pin BPI
+* pin bpo
+* pin vss
+.SUBCKT opamp_r2r_diff_AK bno bni INM_N INP_N inM INP VDD INP_P INM_P BPI bpo
++ vss
+* cell instance $1 r0 *1 0,-80
+X$1 \$5 bno vss vss NFET_STD$1
+* cell instance $2 m90 *1 77,-80
+X$2 \$3 bno vss vss NFET_STD$1
+* cell instance $3 m90 *1 77,-40
+X$3 \$3 bni \$4 vss NFET_STD$1
+* cell instance $4 m90 *1 77,0
+X$4 \$4 inM INP_N vss NFET_STD$1
+* cell instance $5 r0 *1 0,0
+X$5 \$4 INP INM_N vss NFET_STD$1
+* cell instance $6 r0 *1 0,-40
+X$6 \$5 bni \$4 vss NFET_STD$1
+* device instance $1 r180 *1 73.8,80.2 PMOS
+XM$1 INM_P inM \$27 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $5 r180 *1 10.4,80.2 PMOS
+XM$5 INP_P INP \$27 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $9 r180 *1 10.4,160.2 PMOS
+XM$9 VDD bpo \$48 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $13 r180 *1 73.8,160.2 PMOS
+XM$13 VDD bpo \$49 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $17 r180 *1 10.4,120.2 PMOS
+XM$17 \$27 BPI \$48 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $21 r180 *1 73.8,120.2 PMOS
+XM$21 \$27 BPI \$49 VDD PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS opamp_r2r_diff_AK
+
+* cell OSS_ESD_5V_VDD
+* pin PAD,VDD
+* pin VSS
+.SUBCKT OSS_ESD_5V_VDD PAD|VDD VSS
+* cell instance $1 r90 *1 130,0
+X$1 PAD|VDD VSS OSS_NCH_ESD
+* cell instance $2 r270 *1 -130,0
+X$2 VSS PAD|VDD OSS_PCH_ESD
+.ENDS OSS_ESD_5V_VDD
+
+* cell OSS_ESD_5V_VSS
+* pin VDD
+* pin PAD,VSS
+.SUBCKT OSS_ESD_5V_VSS VDD PAD|VSS
+* cell instance $1 r90 *1 -130,0
+X$1 PAD|VSS VDD OSS_PCH_ESD
+* cell instance $2 r270 *1 130,0
+X$2 VDD PAD|VSS OSS_NCH_ESD
+.ENDS OSS_ESD_5V_VSS
+
+* cell OSS_ESD_5V_ANA
+* pin PAD
+* pin VDD
+* pin VSS
+.SUBCKT OSS_ESD_5V_ANA PAD VDD VSS
+* cell instance $2 r90 *1 130,0
+X$2 PAD VSS OSS_NCH_ESD
+* cell instance $3 r90 *1 -130,0
+X$3 PAD VDD OSS_PCH_ESD
+.ENDS OSS_ESD_5V_ANA
+
+* cell PFET_CASCODE_TOP
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_TOP \$1 \$2 \$3 \$8
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$8 \$1 \$2 PMOS L=4u W=96u AS=159.6p AD=159.6p PS=134.6u PD=134.6u
+.ENDS PFET_CASCODE_TOP
+
+* cell PFET_PHESE
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_PHESE \$1 \$2 \$3 \$6
+* device instance $1 r0 *1 11.9,16.2 PMOS
+XM$1 \$3 \$6 \$1 \$2 PMOS L=4u W=96u AS=159.6p AD=159.6p PS=134.6u PD=134.6u
+.ENDS PFET_PHESE
+
+* cell NFET_CASCODE_BOTTOM
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_BOTTOM \$1 \$2 \$5 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$2 \$5 VSS NMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS NFET_CASCODE_BOTTOM
+
+* cell NFET_CASCODE_MID
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_MID \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$3 \$2 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS NFET_CASCODE_MID
+
+* cell PFET_CASCODE_MID
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_MID \$1 \$2 \$3 \$7
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$7 \$3 \$1 \$2 PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS PFET_CASCODE_MID
+
+* cell NFET_PHESE
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_PHESE \$1 \$2 \$5 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$2 \$5 VSS NMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS NFET_PHESE
+
+* cell NFET_CASCODE_TOP
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_TOP \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,19.3 NMOS
+XM$1 \$2 \$1 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=33.6p PS=29.6u PD=29.6u
+.ENDS NFET_CASCODE_TOP
+
+* cell NFET_ZEROCAN
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_ZEROCAN \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,19.3 NMOS
+XM$1 \$2 \$1 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=33.6p PS=29.6u PD=29.6u
+.ENDS NFET_ZEROCAN
+
+* cell PFET_ZEROCAN
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_ZEROCAN \$1 \$2 \$3 \$5
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$5 \$2 \$1 PMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS PFET_ZEROCAN
+
+* cell PFET_CASCODE_BOTTOM
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_BOTTOM \$1 \$2 \$3 \$5
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$5 \$2 \$1 PMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS PFET_CASCODE_BOTTOM
+
+* cell NFET_CS_TOP
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CS_TOP \$1 \$2 \$4 VSS
+* device instance $1 r0 *1 4.8,17.6 NMOS
+XM$1 \$1 \$2 \$4 VSS NMOS L=4u W=12u AS=25.8p AD=25.8p PS=26.6u PD=26.6u
+.ENDS NFET_CS_TOP
+
+* cell NFET_CS_BOTTOM
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CS_BOTTOM \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,16.3 NMOS
+XM$1 \$1 \$3 \$2 VSS NMOS L=4u W=6u AS=16.8p AD=16.8p PS=17.6u PD=17.6u
+.ENDS NFET_CS_BOTTOM
+
+* cell PFET_CS_TOP
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CS_TOP \$1 \$2 \$3 \$6
+* device instance $1 r0 *1 11.8,13.2 PMOS
+XM$1 \$6 \$3 \$1 \$2 PMOS L=4u W=24u AS=43.8p AD=43.8p PS=44.6u PD=44.6u
+.ENDS PFET_CS_TOP
+
+* cell PFET_CS_BOTTOM
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CS_BOTTOM \$1 \$2 \$3 \$4
+* device instance $1 r0 *1 11.8,13.2 PMOS
+XM$1 \$3 \$4 \$2 \$1 PMOS L=4u W=12u AS=25.8p AD=25.8p PS=26.6u PD=26.6u
+.ENDS PFET_CS_BOTTOM
+
+* cell PFET_CASCODE_TOP$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_TOP$1 \$1 \$2 \$3 \$8
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$8 \$1 \$2 PMOS L=4u W=96u AS=159.6p AD=159.6p PS=134.6u PD=134.6u
+.ENDS PFET_CASCODE_TOP$1
+
+* cell PFET_PHESE$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_PHESE$1 \$1 \$2 \$3 \$6
+* device instance $1 r0 *1 11.9,16.2 PMOS
+XM$1 \$3 \$6 \$1 \$2 PMOS L=4u W=96u AS=159.6p AD=159.6p PS=134.6u PD=134.6u
+.ENDS PFET_PHESE$1
+
+* cell NFET_CASCODE_BOTTOM$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_BOTTOM$1 \$1 \$2 \$5 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$2 \$5 VSS NMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS NFET_CASCODE_BOTTOM$1
+
+* cell NFET_CASCODE_MID$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_MID$1 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$3 \$2 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS NFET_CASCODE_MID$1
+
+* cell PFET_CASCODE_MID$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_MID$1 \$1 \$2 \$3 \$7
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$7 \$3 \$1 \$2 PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS PFET_CASCODE_MID$1
+
+* cell NFET_PHESE$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_PHESE$1 \$1 \$2 \$5 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$2 \$5 VSS NMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS NFET_PHESE$1
+
+* cell NFET_CASCODE_TOP$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_TOP$1 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,19.3 NMOS
+XM$1 \$2 \$1 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=33.6p PS=29.6u PD=29.6u
+.ENDS NFET_CASCODE_TOP$1
+
+* cell NFET_ZEROCAN$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_ZEROCAN$1 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,19.3 NMOS
+XM$1 \$2 \$1 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=33.6p PS=29.6u PD=29.6u
+.ENDS NFET_ZEROCAN$1
+
+* cell PFET_ZEROCAN$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_ZEROCAN$1 \$1 \$2 \$3 \$5
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$5 \$2 \$1 PMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS PFET_ZEROCAN$1
+
+* cell PFET_CASCODE_BOTTOM$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_BOTTOM$1 \$1 \$2 \$3 \$5
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$5 \$2 \$1 PMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS PFET_CASCODE_BOTTOM$1
+
+* cell NFET_STD_3
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin VSS
+* pin 
+* pin 
+.SUBCKT NFET_STD_3 \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 \$10 \$11 VSS \$I14 \$I12
+* device instance $1 r0 *1 4.8,21.5 NMOS
+XM$1 \$1 \$8 \$10 VSS NMOS L=4u W=12u AS=33.6p AD=18p PS=29.6u PD=15u
+* device instance $2 r0 *1 11.8,21.5 NMOS
+XM$2 \$10 \$7 \$1 VSS NMOS L=4u W=12u AS=18p AD=33.6p PS=15u PD=29.6u
+* device instance $3 r0 *1 5.2,75.6 NMOS
+XM$3 \$2 \$11 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=18p PS=29.6u PD=15u
+* device instance $4 r0 *1 12.2,75.6 NMOS
+XM$4 \$3 \$9 \$2 VSS NMOS L=4u W=12u AS=18p AD=33.6p PS=15u PD=29.6u
+* device instance $5 r0 *1 5.1,143.5 NMOS
+XM$5 \$I14 \$5 \$4 VSS NMOS L=4u W=12u AS=33.6p AD=18p PS=29.6u PD=15u
+* device instance $6 r0 *1 12.1,143.5 NMOS
+XM$6 \$4 \$6 \$I12 VSS NMOS L=4u W=12u AS=18p AD=33.6p PS=15u PD=29.6u
+.ENDS NFET_STD_3
+
+* cell PFET_STD
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_STD \$2 \$5 \$6 \$7 \$8 \$14 \$23 \$24
+* device instance $1 r0 *1 24.5,137.4 PMOS
+XM$1 \$2 \$6 \$1 \$2 PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $5 r0 *1 24.5,77.4 PMOS
+XM$5 \$14 \$7 \$1 \$2 PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+* device instance $9 r0 *1 24.5,17.4 PMOS
+XM$9 \$5 \$8 \$24 \$2 PMOS L=4u W=24u AS=51.6p AD=36p PS=44.6u PD=30u
+* device instance $11 r0 *1 38.5,17.4 PMOS
+XM$11 \$5 \$8 \$23 \$2 PMOS L=4u W=24u AS=36p AD=51.6p PS=30u PD=44.6u
+.ENDS PFET_STD
+
+* cell NFET_CS_TOP$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CS_TOP$1 \$1 \$2 \$4 VSS
+* device instance $1 r0 *1 4.8,17.6 NMOS
+XM$1 \$1 \$2 \$4 VSS NMOS L=4u W=12u AS=25.8p AD=25.8p PS=26.6u PD=26.6u
+.ENDS NFET_CS_TOP$1
+
+* cell NFET_CS_BOTTOM$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CS_BOTTOM$1 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,16.3 NMOS
+XM$1 \$1 \$3 \$2 VSS NMOS L=4u W=6u AS=16.8p AD=16.8p PS=17.6u PD=17.6u
+.ENDS NFET_CS_BOTTOM$1
+
+* cell PFET_CS_TOP$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CS_TOP$1 \$1 \$2 \$3 \$6
+* device instance $1 r0 *1 11.8,13.2 PMOS
+XM$1 \$6 \$3 \$1 \$2 PMOS L=4u W=24u AS=43.8p AD=43.8p PS=44.6u PD=44.6u
+.ENDS PFET_CS_TOP$1
+
+* cell PFET_CS_BOTTOM$1
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CS_BOTTOM$1 \$1 \$2 \$3 \$4
+* device instance $1 r0 *1 11.8,13.2 PMOS
+XM$1 \$3 \$4 \$2 \$1 PMOS L=4u W=12u AS=25.8p AD=25.8p PS=26.6u PD=26.6u
+.ENDS PFET_CS_BOTTOM$1
+
+* cell PFET_CASCODE_TOP$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_TOP$2 \$1 \$2 \$3 \$8
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$8 \$1 \$2 PMOS L=4u W=96u AS=159.6p AD=159.6p PS=134.6u PD=134.6u
+.ENDS PFET_CASCODE_TOP$2
+
+* cell PFET_PHESE$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_PHESE$2 \$1 \$2 \$3 \$6
+* device instance $1 r0 *1 11.9,16.2 PMOS
+XM$1 \$3 \$6 \$1 \$2 PMOS L=4u W=96u AS=159.6p AD=159.6p PS=134.6u PD=134.6u
+.ENDS PFET_PHESE$2
+
+* cell NFET_CASCODE_BOTTOM$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_BOTTOM$2 \$1 \$2 \$5 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$2 \$5 VSS NMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS NFET_CASCODE_BOTTOM$2
+
+* cell NFET_CASCODE_MID$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_MID$2 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$3 \$2 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS NFET_CASCODE_MID$2
+
+* cell PFET_CASCODE_MID$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_MID$2 \$1 \$2 \$3 \$7
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$7 \$3 \$1 \$2 PMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS PFET_CASCODE_MID$2
+
+* cell NFET_PHESE$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_PHESE$2 \$1 \$2 \$5 VSS
+* device instance $1 r0 *1 4.8,20.6 NMOS
+XM$1 \$1 \$2 \$5 VSS NMOS L=4u W=48u AS=87.6p AD=87.6p PS=74.6u PD=74.6u
+.ENDS NFET_PHESE$2
+
+* cell NFET_CASCODE_TOP$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CASCODE_TOP$2 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,19.3 NMOS
+XM$1 \$2 \$1 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=33.6p PS=29.6u PD=29.6u
+.ENDS NFET_CASCODE_TOP$2
+
+* cell NFET_ZEROCAN$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_ZEROCAN$2 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,19.3 NMOS
+XM$1 \$2 \$1 \$3 VSS NMOS L=4u W=12u AS=33.6p AD=33.6p PS=29.6u PD=29.6u
+.ENDS NFET_ZEROCAN$2
+
+* cell PFET_ZEROCAN$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_ZEROCAN$2 \$1 \$2 \$3 \$5
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$5 \$2 \$1 PMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS PFET_ZEROCAN$2
+
+* cell PFET_CASCODE_BOTTOM$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CASCODE_BOTTOM$2 \$1 \$2 \$3 \$5
+* device instance $1 r0 *1 11.8,16.2 PMOS
+XM$1 \$3 \$5 \$2 \$1 PMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS PFET_CASCODE_BOTTOM$2
+
+* cell NFET_CS_TOP$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CS_TOP$2 \$1 \$2 \$4 VSS
+* device instance $1 r0 *1 4.8,17.6 NMOS
+XM$1 \$1 \$2 \$4 VSS NMOS L=4u W=12u AS=25.8p AD=25.8p PS=26.6u PD=26.6u
+.ENDS NFET_CS_TOP$2
+
+* cell NFET_CS_BOTTOM$2
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_CS_BOTTOM$2 \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 4.8,16.3 NMOS
+XM$1 \$1 \$3 \$2 VSS NMOS L=4u W=6u AS=16.8p AD=16.8p PS=17.6u PD=17.6u
+.ENDS NFET_CS_BOTTOM$2
+
+* cell PFET_CS_TOP$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CS_TOP$2 \$1 \$2 \$3 \$6
+* device instance $1 r0 *1 11.8,13.2 PMOS
+XM$1 \$6 \$3 \$1 \$2 PMOS L=4u W=24u AS=43.8p AD=43.8p PS=44.6u PD=44.6u
+.ENDS PFET_CS_TOP$2
+
+* cell PFET_CS_BOTTOM$2
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT PFET_CS_BOTTOM$2 \$1 \$2 \$3 \$4
+* device instance $1 r0 *1 11.8,13.2 PMOS
+XM$1 \$3 \$4 \$2 \$1 PMOS L=4u W=12u AS=25.8p AD=25.8p PS=26.6u PD=26.6u
+.ENDS PFET_CS_BOTTOM$2
+
+* cell NFET_STD$1
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NFET_STD$1 \$1 \$2 \$4 VSS
+* device instance $1 r0 *1 4.9,16 NMOS
+XM$1 \$1 \$2 \$4 VSS NMOS L=4u W=24u AS=51.6p AD=51.6p PS=44.6u PD=44.6u
+.ENDS NFET_STD$1
+
+* cell OSS_PCH_ESD
+* pin PAD
+* pin VDD
+.SUBCKT OSS_PCH_ESD PAD VDD
+* device instance $1 r0 *1 -65.5,0 PMOS
+XM$1 PAD VDD VDD VDD PMOS L=2u W=500u AS=3523.04p AD=3523.04p PS=689.36u
++ PD=689.36u
+.ENDS OSS_PCH_ESD
+
+* cell OSS_NCH_ESD
+* pin PAD
+* pin VSS
+.SUBCKT OSS_NCH_ESD PAD VSS
+* device instance $1 r0 *1 -65.5,0 NMOSE
+XM$1 PAD VSS VSS VSS NMOSE L=2u W=500u AS=3523.04p AD=3523.04p PS=689.36u
++ PD=689.36u
+.ENDS OSS_NCH_ESD

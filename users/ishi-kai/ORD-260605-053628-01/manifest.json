@@ -3,9 +3,11 @@
   "submissionSequence": 4,
   "githubId": "ishi-kai",
   "sourceRepo": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_kyoto-ths_01",
-  "sourceRunId": "27185721431",
+  "sourceRunId": "31565393934",
   "sourceArtifactName": "GDSII_MDP",
   "normalizedRepoName": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_kyoto-ths_01",
   "gdsFile": "GDSII_MDP.gds",
-  "gdsTopCell": "ORD_260605_053628_01"
+  "gdsTopCell": "ORD_260605_053628_01",
+  "gdsiiDrawingFiles": "tr_1um_kyoto_ths_01.gds",
+  "extractedFiles": "tr_1um_kyoto_ths_01.extracted"
 }
