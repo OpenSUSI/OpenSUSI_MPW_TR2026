@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260722-033310-01",
+  "submissionSequence": 8,
+  "githubId": "FujimotoKuniaki",
+  "sourceRepo": "FujimotoKuniaki/TR-1um_Seisho",
+  "sourceRunId": "31686536136",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "FujimotoKuniaki/TR-1um_Seisho",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260722_033310_01",
+  "gdsiiDrawingFiles": "tr_1um_fujimoto_kuniaki2.gds",
+  "extractedFiles": "tr_1um_fujimoto_kuniaki2.extracted"
+}
