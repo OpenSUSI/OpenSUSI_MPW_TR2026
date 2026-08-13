@@ -2,12 +2,12 @@
   "orderId": "ORD-260723-215727-01",
   "submissionSequence": 7,
   "githubId": "FujimotoKuniaki",
-  "sourceRepo": "FujimotoKuniaki/TR-1um_TEST",
-  "sourceRunId": "31671082320",
+  "sourceRepo": "FujimotoKuniaki/TR-1um_Seisho",
+  "sourceRunId": "31686536136",
   "sourceArtifactName": "GDSII_MDP",
-  "normalizedRepoName": "FujimotoKuniaki/TR-1um_TEST",
+  "normalizedRepoName": "FujimotoKuniaki/TR-1um_Seisho",
   "gdsFile": "GDSII_MDP.gds",
   "gdsTopCell": "ORD_260723_215727_01",
-  "gdsiiDrawingFiles": "tr_1um_fujimoto_kuniaki.gds",
-  "extractedFiles": "tr_1um_fujimoto_kuniaki.extracted"
+  "gdsiiDrawingFiles": "tr_1um_fujimoto_kuniaki2.gds",
+  "extractedFiles": "tr_1um_fujimoto_kuniaki2.extracted"
 }
