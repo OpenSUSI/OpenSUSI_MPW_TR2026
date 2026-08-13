@@ -81,7 +81,7 @@ text { font-family: Arial, sans-serif; fill: black; }
 <rect class="tile tile-user" x="1040" y="70" width="140" height="90" />
 <text class="tile-title" x="1046" y="88">FujimotoKuniaki</text>
 <text class="tile-sub" x="1046" y="106">ORD_260723_215727_01</text>
-<text class="tile-run" x="1046" y="124">Run: 31671082320</text>
+<text class="tile-run" x="1046" y="124">Run: 31686536136</text>
 <text class="tile-run" x="1046" y="142">Tile: (7,0)</text>
 </a>
 <a href="https://github.com/OpenSUSI/OpenSUSI_MPW_TR2026/blob/main/users/000_system" target="_blank">
