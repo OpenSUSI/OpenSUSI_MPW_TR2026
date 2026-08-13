@@ -147,21 +147,21 @@
       "sourceArtifactName": "GDSII_MDP"
     },
     {
-      "type": "fill",
-      "githubId": "000_system",
-      "gdsFile": "users/000_system/GDSII_FILL.gds",
-      "gdsTopCell": "tr_1um_000_system",
+      "type": "user",
+      "githubId": "FujimotoKuniaki",
+      "gdsFile": "users/FujimotoKuniaki/ORD-260722-033310-01/GDSII_MDP.gds",
+      "gdsTopCell": "ORD_260722_033310_01",
       "x": -8750.0,
       "y": 6250.0,
       "tileIndex": 8,
       "row": 1,
       "col": 0,
-      "submissionSequence": null,
-      "normalizedRepoName": null,
-      "orderId": null,
-      "sourceRepo": null,
-      "sourceRunId": null,
-      "sourceArtifactName": null
+      "submissionSequence": 8,
+      "normalizedRepoName": "FujimotoKuniaki/TR-1um_Seisho",
+      "orderId": "ORD-260722-033310-01",
+      "sourceRepo": "FujimotoKuniaki/TR-1um_Seisho",
+      "sourceRunId": "31686536136",
+      "sourceArtifactName": "GDSII_MDP"
     },
     {
       "type": "fill",

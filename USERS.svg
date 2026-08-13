@@ -84,11 +84,11 @@ text { font-family: Arial, sans-serif; fill: black; }
 <text class="tile-run" x="1046" y="124">Run: 31686536136</text>
 <text class="tile-run" x="1046" y="142">Tile: (7,0)</text>
 </a>
-<a href="https://github.com/OpenSUSI/OpenSUSI_MPW_TR2026/blob/main/users/000_system" target="_blank">
-<rect class="tile tile-fill" x="60" y="160" width="140" height="90" />
-<text class="tile-title" x="66" y="178">EMPTY</text>
-<text class="tile-sub" x="66" y="196">tr_1um_000_system</text>
-<text class="tile-run" x="66" y="214">Run: -</text>
+<a href="https://github.com/OpenSUSI/OpenSUSI_MPW_TR2026/blob/main/users/FujimotoKuniaki/ORD-260722-033310-01" target="_blank">
+<rect class="tile tile-user" x="60" y="160" width="140" height="90" />
+<text class="tile-title" x="66" y="178">FujimotoKuniaki</text>
+<text class="tile-sub" x="66" y="196">ORD_260722_033310_01</text>
+<text class="tile-run" x="66" y="214">Run: 31686536136</text>
 <text class="tile-run" x="66" y="232">Tile: (0,1)</text>
 </a>
 <a href="https://github.com/OpenSUSI/OpenSUSI_MPW_TR2026/blob/main/users/000_system" target="_blank">
