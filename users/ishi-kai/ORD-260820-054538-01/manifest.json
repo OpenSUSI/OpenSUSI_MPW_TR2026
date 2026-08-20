@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260820-054538-01",
+  "submissionSequence": 9,
+  "githubId": "ishi-kai",
+  "sourceRepo": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_ZEP",
+  "sourceRunId": "32150856665",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_ZEP",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260820_054538_01",
+  "gdsiiDrawingFiles": "tr_1um_ZEP.gds",
+  "extractedFiles": "tr_1um_ZEP.extracted"
+}
