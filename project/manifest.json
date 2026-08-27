@@ -191,10 +191,10 @@
       "row": 1,
       "col": 2,
       "submissionSequence": 10,
-      "normalizedRepoName": "hironorimiura/OpenSUSI-TR1um-v2609_01",
+      "normalizedRepoName": "hironorimiura/OpenSUSI-TR1um-v2609_02",
       "orderId": "ORD-260614-000834-01",
-      "sourceRepo": "hironorimiura/OpenSUSI-TR1um-v2609_01",
-      "sourceRunId": "33059659224",
+      "sourceRepo": "hironorimiura/OpenSUSI-TR1um-v2609_02",
+      "sourceRunId": "33059882027",
       "sourceArtifactName": "GDSII_MDP"
     },
     {
