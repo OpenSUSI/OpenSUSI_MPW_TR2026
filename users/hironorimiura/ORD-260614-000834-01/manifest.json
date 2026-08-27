@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260614-000834-01",
+  "submissionSequence": 10,
+  "githubId": "hironorimiura",
+  "sourceRepo": "hironorimiura/OpenSUSI-TR1um-v2609_01",
+  "sourceRunId": "33059659224",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "hironorimiura/OpenSUSI-TR1um-v2609_01",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260614_000834_01",
+  "gdsiiDrawingFiles": "tr_1um_atmarktechno01.gds",
+  "extractedFiles": "tr_1um_atmarktechno01.extracted"
+}
