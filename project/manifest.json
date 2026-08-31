@@ -38,10 +38,10 @@
       "row": 0,
       "col": 1,
       "submissionSequence": 1,
-      "normalizedRepoName": "jun1okamura/TR-1um_TEST3",
+      "normalizedRepoName": "jun1okamura/TR-1um_I2C_2026",
       "orderId": "ORD-260530-005051-01",
-      "sourceRepo": "jun1okamura/TR-1um_TEST3",
-      "sourceRunId": "29131087981",
+      "sourceRepo": "jun1okamura/TR-1um_I2C_2026",
+      "sourceRunId": "33370942411",
       "sourceArtifactName": "GDSII_MDP"
     },
     {
