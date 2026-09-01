@@ -25,6 +25,16 @@ LOGO_POSITION_NAMES = (
     "right_bottom",
 )
 
+# Corner sign, aligned index-for-index with LOGO_POSITION_NAMES above:
+# left_top=top_left corner, right_top=top_right corner,
+# right_bottom=bottom_right corner. Used to derive each logo instance's
+# placement from its own actual bbox -- see build_user_wrapper_cell().
+LOGO_CORNER_SIGNS = (
+    (-1.0, 1.0),
+    (1.0, 1.0),
+    (1.0, -1.0),
+)
+
 
 # ----------------------------
 # Generic utilities
@@ -403,7 +413,17 @@ def get_or_load_logo_cell(
     logo_path: Path,
     logo_cache: dict[str, pya.Cell],
     config,
+    *,
+    allow_fallback: bool = True,
 ) -> pya.Cell:
+    """Load (and cache) a logo cell. If its actual bbox exceeds
+    config.logo_bbox (info.yaml's declared limit), the logo is a DRC risk
+    (its outer-edge-aligned placement -- see build_user_wrapper_cell --
+    assumes it fits within that limit): it is swapped for
+    config.logo_fallback (Default.gds) instead of being placed as-is, so
+    the corner still gets a valid, DRC-safe logo rather than nothing.
+    allow_fallback=False guards against the fallback itself being
+    oversized (a config error, not a per-tile one) -- that raises."""
     cache_key = str(logo_path)
 
     if cache_key in logo_cache:
@@ -417,13 +437,33 @@ def get_or_load_logo_cell(
 
     if config.logo_bbox is not None:
         limit_x_um, limit_y_um = config.logo_bbox
-        ensure_bbox_within_limit(
-            layout,
-            logo_cell,
-            limit_x_um,
-            limit_y_um,
-            f"logo:{logo_path}",
-        )
+        box = logo_cell.bbox()
+        dbu = layout.dbu
+        width_um = box.width() * dbu
+        height_um = box.height() * dbu
+
+        if width_um > limit_x_um or height_um > limit_y_um:
+            layout.prune_cell(logo_cell.cell_index())
+
+            if not allow_fallback:
+                raise RuntimeError(
+                    f"Fallback logo itself exceeds bbox limit: {logo_path} "
+                    f"({width_um:.1f}x{height_um:.1f}um > "
+                    f"limit {limit_x_um}x{limit_y_um}um)"
+                )
+
+            print(
+                f"WARNING: logo exceeds bbox limit, substituting fallback "
+                f"({config.logo_fallback}): {logo_path} "
+                f"({width_um:.1f}x{height_um:.1f}um > "
+                f"limit {limit_x_um}x{limit_y_um}um)"
+            )
+            fallback_path = Path(config.logo_dir) / config.logo_fallback
+            fallback_cell = get_or_load_logo_cell(
+                layout, fallback_path, logo_cache, config, allow_fallback=False
+            )
+            logo_cache[cache_key] = fallback_cell
+            return fallback_cell
 
     logo_cache[cache_key] = logo_cell
     return logo_cell
@@ -507,7 +547,7 @@ def build_user_wrapper_cell(
     # LOGO
     tile_number = get_tile_number(user, tile_index)
 
-    for position_name, (x_um, y_um) in zip(LOGO_POSITION_NAMES, config.logo_positions):
+    for position_name, (sign_x, sign_y) in zip(LOGO_POSITION_NAMES, LOGO_CORNER_SIGNS):
         logo_path = resolve_logo_path_for_position(
             config=config,
             logo_map=logo_map,
@@ -515,6 +555,18 @@ def build_user_wrapper_cell(
             position_name=position_name,
         )
         logo_cell = get_or_load_logo_cell(layout, logo_path, logo_cache, config)
+
+        # Placement derived from THIS logo's own actual bbox (which may
+        # be the fallback's, if the requested logo was oversized), so its
+        # outer edge (nearest the tile boundary) always lands at
+        # config.logo_placement_outer_margin regardless of logo size.
+        box = logo_cell.bbox()
+        bbox_x_um = box.width() * dbu
+        bbox_y_um = box.height() * dbu
+        margin = config.logo_placement_outer_margin
+        x_um = sign_x * (margin - bbox_x_um / 2.0)
+        y_um = sign_y * (margin - bbox_y_um / 2.0)
+
         insert_instance(wrapper, logo_cell, x_um, y_um, dbu)
 
     # MULTI-LINE TEXT

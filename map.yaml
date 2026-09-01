@@ -4,14 +4,18 @@
 # ----- ------ ----- ----- ------ ----- ----- ------ -----
 tile_num:
   default:
+    left_top    : Default.gds
+    right_top   : Default.gds
+    right_bottom: OpenSUSI_LOGO.gds
+
+  "1":
     left_top    : OpenSUSI_LOGO.gds
     right_top   : OpenSUSI_LOGO.gds
     right_bottom: OpenSUSI_LOGO.gds
 
-  "1":
-    left_top    : FFG_LOGO.gds
-    right_top   : OpenSUSI_LOGO.gds
-
   "2":
-    left_top    : FFG_LOGO.gds
+    left_top    : OpenSUSI_LOGO.gds
+
+  "3":
+    right_top   : OpenSUSI_LOGO.gds    
 

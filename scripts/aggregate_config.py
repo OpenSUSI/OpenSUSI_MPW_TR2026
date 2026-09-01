@@ -21,8 +21,9 @@ class AggregateConfig:
 
     logo_dir: Path
     logo_default: str
+    logo_fallback: str
     logo_bbox: Optional[tuple[float, float]]
-    logo_positions: list[tuple[float, float]]
+    logo_placement_outer_margin: float
 
     xy_layer: tuple[int, int]
     xy_bbox: tuple[float, float]
@@ -110,7 +111,6 @@ def load_config(path: Path) -> AggregateConfig:
     aggregate_pitch = require_section(aggregate, "pitch")
     aggregate_grid = require_section(aggregate, "grid")
 
-    logo_placements = require_section(logo, "placements")
     xy_placement = require_section(xy_mark, "placement")
     xy_bbox = require_section(xy_mark, "bbox")
 
@@ -125,6 +125,7 @@ def load_config(path: Path) -> AggregateConfig:
 
     logo_dir = Path(require_string(logo, "dir", "logo"))
     logo_default = require_string(logo, "default", "logo")
+    logo_fallback = require_string(logo, "fallback", "logo")
 
     logo_bbox_data = logo.get("bbox")
     logo_bbox: Optional[tuple[float, float]] = (
@@ -133,19 +134,9 @@ def load_config(path: Path) -> AggregateConfig:
         else None
     )
 
-    top_left = require_xy_pair(
-        logo_placements["top_left"],
-        "logo.placements.top_left",
+    logo_placement_outer_margin = require_float(
+        logo, "placement_outer_margin", "logo"
     )
-    top_right = require_xy_pair(
-        logo_placements["top_right"],
-        "logo.placements.top_right",
-    )
-    bottom_right = require_xy_pair(
-        logo_placements["bottom_right"],
-        "logo.placements.bottom_right",
-    )
-    logo_positions = [top_left, top_right, bottom_right]
 
     xy_layer = require_layer_pair(xy_mark.get("layer"), "xy_mark.layer")
     xy_bbox_pair = require_xy_pair(xy_bbox, "xy_mark.bbox")
@@ -171,8 +162,9 @@ def load_config(path: Path) -> AggregateConfig:
         fill_gds=fill_gds,
         logo_dir=logo_dir,
         logo_default=logo_default,
+        logo_fallback=logo_fallback,
         logo_bbox=logo_bbox,
-        logo_positions=logo_positions,
+        logo_placement_outer_margin=logo_placement_outer_margin,
         xy_layer=xy_layer,
         xy_bbox=xy_bbox_pair,
         xy_pos=xy_pos,

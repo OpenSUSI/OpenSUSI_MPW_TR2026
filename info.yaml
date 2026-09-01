@@ -29,23 +29,31 @@ logo:
   dir: logos
   default: OpenSUSI_LOGO.gds
 
-  # expected logo bbox (centered origin)
+  # substituted in place of any logo whose actual measured bbox exceeds
+  # logo.bbox below (a DRC risk, since outer-edge-aligned placement
+  # assumes the logo fits within that limit) -- see aggregate_gds.py
+  # get_or_load_logo_cell(). Must itself fit within logo.bbox.
+  fallback: Default.gds
+
+  # maximum allowed logo bbox (centered origin). A logo file whose actual
+  # digitized footprint exceeds this at aggregate time would be a DRC risk
+  # (uncontrolled overlap into neighboring geometry) -- it is skipped
+  # (not placed) instead of aggregation failing; see aggregate_gds.py
+  # get_or_load_logo_cell().
   bbox:
     x: 320.0
     y: 160.0
 
-  placements:
-    top_left:
-      x: -965.0
-      y: 1040.0
-
-    top_right:
-      x:  965.0
-      y: 1040.0
-
-    bottom_right:
-      x:  965.0
-      y: -1040.0
+  # Outer-edge alignment margin (um) from the tile center. Each logo
+  # instance's placement is computed from ITS OWN actual measured bbox
+  # (read after loading -- different files via map.yaml overrides can
+  # have different real sizes) so that the logo's OUTER edge -- the edge
+  # nearest the tile boundary -- always lands at this fixed offset,
+  # regardless of the logo's actual size:
+  #   x_center = sign_x * (placement_outer_margin - actual_bbox_x / 2)
+  #   y_center = sign_y * (placement_outer_margin - actual_bbox_y / 2)
+  # top_left: sign=(-1,+1) / top_right: sign=(+1,+1) / bottom_right: sign=(+1,-1)
+  placement_outer_margin: 1120.0
 
 # ----------------------------
 # XY mark configuration
