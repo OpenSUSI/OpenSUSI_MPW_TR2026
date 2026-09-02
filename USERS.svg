@@ -74,7 +74,7 @@ text { font-family: Arial, sans-serif; fill: black; }
 <rect class="tile tile-user" x="900" y="70" width="140" height="90" />
 <text class="tile-title" x="906" y="88">munetomo-maruyama</text>
 <text class="tile-sub" x="906" y="106">ORD_260706_001837_01</text>
-<text class="tile-run" x="906" y="124">Run: 30881391163</text>
+<text class="tile-run" x="906" y="124">Run: 33638992115</text>
 <text class="tile-run" x="906" y="142">Tile: (6,0)</text>
 </a>
 <a href="https://github.com/OpenSUSI/OpenSUSI_MPW_TR2026/blob/main/users/FujimotoKuniaki/ORD-260723-215727-01" target="_blank">
