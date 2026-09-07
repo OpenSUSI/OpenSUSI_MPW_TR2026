@@ -8,16 +8,27 @@ Convert a logo PNG into a dot-matrix logo GDSII.
 
 Pipeline:
   1. Load the PNG and binarize it to pure black/white (BINARIZE_THRESHOLD).
-  2. Downsample the binarized image onto a regular dot grid sized to fit
-     the logo bbox (BBOX_X_UM x BBOX_Y_UM), where each grid cell's value
-     is the local fraction of "ink" pixels inside it.
-  3. Any cell whose ink coverage is >= INK_THRESHOLD gets a single
+  2. Find the tight bounding box of "ink" pixels in the binarized image
+     (i.e. crop away any surrounding blank margin in the source PNG --
+     the fit in the next step is sized to the actual artwork, not to
+     the PNG canvas, which may include padding).
+  3. Fit that content's aspect ratio to a dot grid as large as possible
+     without exceeding the bbox limit (BBOX_X_UM x BBOX_Y_UM), similar
+     to CSS "object-fit: contain" -- the content's aspect ratio is
+     preserved, never stretched, and the grid only shrinks below the
+     bbox on whichever axis the aspect ratio forces.
+  4. Downsample the cropped binarized content onto that grid, where
+     each cell's value is the local fraction of "ink" pixels inside it.
+  5. Any cell whose ink coverage is >= INK_THRESHOLD gets a single
      DOT_UM x DOT_UM square dot on GDS_LAYER/GDS_DATATYPE, laid out on a
      PITCH_UM (= DOT_UM + SPACE_UM) grid.
-  4. The layout origin (0, 0) is the center of the bbox, matching the
+  6. The layout origin (0, 0) is the center of the bbox, matching the
      placement convention used elsewhere in this repo (aggregate_gds.py
      inserts the logo cell at a fixed x/y from info.yaml's
-     logo.placements, so the cell's own origin must be its visual center).
+     logo.placements, so the cell's own origin must be its visual
+     center). If the fitted grid is smaller than the bbox on one axis,
+     it is still centered at (0, 0) -- i.e. letterboxed within the
+     declared bbox, not pinned to a corner.
 
 Usage:
     python3 png_to_logo_gds.py --input logo.png --output logo.gds \
@@ -46,14 +57,12 @@ import klayout.db as pya
 BBOX_X_UM = 320.0
 BBOX_Y_UM = 160.0
 
-DOT_UM   = 3.0
+DOT_UM = 3.0
 SPACE_UM = 2.0
 PITCH_UM = DOT_UM + SPACE_UM  # 5.0 um center-to-center
 
-# TODO: set to the actual M2 layer/datatype number for your PDK before
-# running this for real. These placeholder values are almost certainly
-# wrong for your process.
-GDS_LAYER    = 20
+# M2 layer/datatype for this PDK.
+GDS_LAYER = 20
 GDS_DATATYPE = 0
 
 # Pixel binarization cutoff (0-255, PIL "L" grayscale). Pixels darker
@@ -72,42 +81,97 @@ DEFAULT_TOP_CELL = "LOGO"
 DBU_UM = 0.001  # 1 database unit = 1 nm, matches layout.dbu elsewhere in this repo
 
 
-def compute_grid_size() -> tuple[int, int]:
-    cols = BBOX_X_UM / PITCH_UM
-    rows = BBOX_Y_UM / PITCH_UM
+def max_grid_size() -> tuple[int, int]:
+    """Upper bound on grid cells that fit inside the bbox at PITCH_UM."""
+    max_cols = int(BBOX_X_UM // PITCH_UM)
+    max_rows = int(BBOX_Y_UM // PITCH_UM)
 
-    if abs(cols - round(cols)) > 1e-6 or abs(rows - round(rows)) > 1e-6:
+    if max_cols < 1 or max_rows < 1:
         raise ValueError(
-            "BBOX size must be an integer multiple of PITCH_UM "
-            f"(DOT_UM+SPACE_UM={PITCH_UM}): "
-            f"got {BBOX_X_UM}x{BBOX_Y_UM} -> {cols}x{rows} cells"
+            f"BBOX ({BBOX_X_UM}x{BBOX_Y_UM} um) is too small for "
+            f"PITCH_UM={PITCH_UM}"
         )
 
-    return int(round(cols)), int(round(rows))
+    return max_cols, max_rows
 
 
-def load_dot_grid(png_path: Path, cols: int, rows: int, invert: bool) -> np.ndarray:
+def binarize_image(png_path: Path, invert: bool) -> Image.Image:
     """
-    Binarize the PNG to black/white, then downsample onto a cols x rows
-    grid of per-cell ink coverage, and threshold that into an on/off dot
-    grid. Returns a bool array of shape (rows, cols); True = dot on.
-    Row 0 is the top of the source image; col 0 is the left edge.
+    白黒化 (binarize) the PNG to pure black/white. Darker-than-threshold
+    pixels become "ink" (255); everything else becomes background (0).
     """
     im = Image.open(png_path).convert("L")
-
-    # Step 1: 白黒化 (binarize). Darker-than-threshold pixels -> "ink"
-    # (255), everything else -> background (0), so the BOX-filter resize
-    # below produces a clean per-cell ink-coverage average rather than
-    # picking up anti-aliasing gray levels directly.
     bw = im.point(lambda p: 255 if p < BINARIZE_THRESHOLD else 0)
 
     if invert:
         bw = bw.point(lambda p: 255 - p)
 
-    # Step 2: downsample the binary image onto the dot grid; each output
-    # pixel becomes the local average ink coverage (0..255) of the
-    # region it was downsampled from.
-    small = bw.resize((cols, rows), Image.BOX)
+    return bw
+
+
+def content_bbox(bw: Image.Image) -> tuple[int, int, int, int]:
+    """
+    Tight pixel bounding box of the "ink" (non-zero) region of a
+    binarized image, i.e. the actual artwork extent with any blank
+    canvas margin cropped away.
+    """
+    bbox = bw.getbbox()
+
+    if bbox is None:
+        raise ValueError(
+            "No ink pixels found after binarization -- is the source "
+            "PNG blank, or does it need --invert?"
+        )
+
+    return bbox
+
+
+def fit_grid_to_aspect(content_w: int, content_h: int) -> tuple[int, int]:
+    """
+    Compute the largest (cols, rows) grid that preserves the content's
+    aspect ratio without exceeding the bbox's max grid size in either
+    dimension (an integer-grid analogue of "object-fit: contain"). This
+    is sized to the content bbox, not the full PNG canvas, so any blank
+    margin in the source image doesn't shrink the resulting logo.
+    """
+    max_cols, max_rows = max_grid_size()
+    aspect = content_w / content_h  # width / height
+
+    # Try height-constrained first (use the full row budget).
+    cols = round(max_rows * aspect)
+    rows = max_rows
+
+    if cols > max_cols:
+        # Height-constrained fit is too wide; fall back to width-constrained.
+        cols = max_cols
+        rows = round(max_cols / aspect)
+
+    cols = max(1, min(cols, max_cols))
+    rows = max(1, min(rows, max_rows))
+
+    return cols, rows
+
+
+def load_dot_grid(
+    bw: Image.Image,
+    bbox: tuple[int, int, int, int],
+    cols: int,
+    rows: int,
+) -> np.ndarray:
+    """
+    Crop the binarized image to its content bbox, then downsample onto a
+    cols x rows grid of per-cell ink coverage, and threshold that into
+    an on/off dot grid. Returns a bool array of shape (rows, cols); True
+    = dot on. Row 0 is the top of the content; col 0 is the left edge.
+    """
+    cropped = bw.crop(bbox)
+
+    # Downsample the cropped binary content onto the dot grid; each
+    # output pixel becomes the local average ink coverage (0..255) of
+    # the region it was downsampled from. cols/rows were already chosen
+    # (by fit_grid_to_aspect) to match the content's own aspect ratio,
+    # so this is a uniform scale in both axes, not a stretch.
+    small = cropped.resize((cols, rows), Image.BOX)
     coverage = np.asarray(small, dtype=np.float64) / 255.0
 
     return coverage >= INK_THRESHOLD
@@ -124,11 +188,18 @@ def build_gds(grid: np.ndarray, output_path: Path, top_cell_name: str) -> None:
     dbu = layout.dbu
     half_dot_dbu = int(round((DOT_UM / 2.0) / dbu))
 
-    # Origin (0, 0) = center of the bbox. Row 0 (top of the source image)
-    # maps to the top edge of the bbox (+Y), since GDS Y increases upward
-    # while image rows increase downward.
-    origin_x_um = -BBOX_X_UM / 2.0
-    origin_y_um = BBOX_Y_UM / 2.0
+    # Actual footprint of the fitted grid (<= bbox in each axis).
+    grid_w_um = cols * PITCH_UM
+    grid_h_um = rows * PITCH_UM
+
+    # Origin (0, 0) = center of the bbox. The fitted grid is centered on
+    # this origin too, so if it's smaller than the bbox on one axis
+    # (aspect-ratio letterboxing), the margin is split evenly on both
+    # sides rather than pinned to a corner. Row 0 (top of the source
+    # image) maps to the top edge of the grid (+Y), since GDS Y
+    # increases upward while image rows increase downward.
+    origin_x_um = -grid_w_um / 2.0
+    origin_y_um = grid_h_um / 2.0
 
     dot_count = 0
 
@@ -155,10 +226,11 @@ def build_gds(grid: np.ndarray, output_path: Path, top_cell_name: str) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     layout.write(str(output_path))
 
+    max_cols, max_rows = max_grid_size()
     print(f"top cell   : {top_cell_name}")
     print(f"layer      : {GDS_LAYER}/{GDS_DATATYPE}")
-    print(f"bbox       : {BBOX_X_UM} x {BBOX_Y_UM} um")
-    print(f"grid       : {cols} x {rows} cells (pitch {PITCH_UM} um)")
+    print(f"bbox limit : {BBOX_X_UM} x {BBOX_Y_UM} um ({max_cols} x {max_rows} cells max)")
+    print(f"fitted grid: {cols} x {rows} cells (pitch {PITCH_UM} um) -> {grid_w_um} x {grid_h_um} um")
     print(f"dots drawn : {dot_count} / {cols * rows}")
     print(f"output     : {output_path}")
 
@@ -201,8 +273,14 @@ def main() -> int:
         print(f"ERROR: input PNG not found: {args.input}", file=sys.stderr)
         return 1
 
-    cols, rows = compute_grid_size()
-    grid = load_dot_grid(args.input, cols, rows, args.invert)
+    bw = binarize_image(args.input, args.invert)
+    bbox = content_bbox(bw)
+    left, top, right, bottom = bbox
+    content_w = right - left
+    content_h = bottom - top
+
+    cols, rows = fit_grid_to_aspect(content_w, content_h)
+    grid = load_dot_grid(bw, bbox, cols, rows)
     build_gds(grid, args.output, args.top_cell)
 
     return 0
