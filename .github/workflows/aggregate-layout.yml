@@ -112,7 +112,6 @@ jobs:
 
           stage_outputs() {
             git add -f project/manifest.json
-            git add -f project/ALL_GDSII_MDP.gds
             git add -f USERS.md
             git add -f USERS.svg
           }
@@ -120,36 +119,73 @@ jobs:
           stage_outputs
 
           if git diff --cached --quiet; then
-            echo "No changes"
-            exit 0
+            echo "No repository files changed"
+          else
+            git commit -m "Update aggregated layout"
+
+            push_succeeded=false
+
+            for attempt in 1 2 3 4 5; do
+              echo "Push attempt ${attempt}"
+
+              if git push origin HEAD:main; then
+                echo "Push succeeded"
+                push_succeeded=true
+                break
+              fi
+
+              echo "Push failed. Remote main was updated. Re-sync and rebuild."
+
+              git fetch origin main
+              git reset --hard origin/main
+
+              rebuild_outputs
+              stage_outputs
+
+              if git diff --cached --quiet; then
+                echo "No changes after re-sync"
+                push_succeeded=true
+                break
+              fi
+
+              git commit -m "Update aggregated layout"
+              sleep $((attempt * 3))
+            done
+
+            if [[ "$push_succeeded" != true ]]; then
+              echo "Failed to push after retries"
+              exit 1
+            fi
           fi
 
-          git commit -m "Update aggregated layout"
+      - name: Publish aggregate GDS
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: aggregate-current
+          GDS_FILE: project/ALL_GDSII_MDP.gds
+        run: |
+          set -euo pipefail
 
-          for attempt in 1 2 3 4 5; do
-            echo "Push attempt ${attempt}"
+          if [[ ! -s "$GDS_FILE" ]]; then
+            echo "ERROR: Aggregate GDS does not exist or is empty"
+            exit 1
+          fi
 
-            if git push origin HEAD:main; then
-              echo "Push succeeded"
-              exit 0
-            fi
+          ls -lh "$GDS_FILE"
 
-            echo "Push failed. Remote main was updated. Re-sync and rebuild."
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Updating existing aggregate release"
 
-            git fetch origin main
-            git reset --hard origin/main
+            gh release upload "$RELEASE_TAG" \
+              "$GDS_FILE" \
+              --clobber
+          else
+            echo "Creating aggregate release"
 
-            rebuild_outputs
-            stage_outputs
-
-            if git diff --cached --quiet; then
-              echo "No changes after re-sync"
-              exit 0
-            fi
-
-            git commit -m "Update aggregated layout"
-            sleep $((attempt * 3))
-          done
-
-          echo "Failed to push after retries"
-          exit 1
+            gh release create "$RELEASE_TAG" \
+              "$GDS_FILE" \
+              --target main \
+              --title "Current Aggregate GDS" \
+              --notes "Automatically generated aggregate GDS for the current OpenSUSI TR-1um MPW submission." \
+              --latest
+          fi
