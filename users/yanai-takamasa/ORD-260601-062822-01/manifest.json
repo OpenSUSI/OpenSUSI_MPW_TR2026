@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260601-062822-01",
+  "submissionSequence": 27,
+  "githubId": "yanai-takamasa",
+  "sourceRepo": "yanai-takamasa/TR-1um_HHTT2602",
+  "sourceRunId": "34548773358",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "yanai-takamasa/TR-1um_HHTT2602",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260601_062822_01",
+  "gdsiiDrawingFiles": "HHTT2602.gds",
+  "extractedFiles": "HHTT2602.extracted"
+}

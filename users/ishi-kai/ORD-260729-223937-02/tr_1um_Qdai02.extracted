@@ -1,0 +1,265 @@
+* Created by KLayout
+*** My special header ***
+
+* cell tr_1um_Qdai02
+* pin P1
+* pin P10
+* pin P11
+* pin P12
+* pin P13
+* pin P14
+* pin P15
+* pin P2
+* pin P3
+* pin P4
+* pin P5
+* pin P6
+* pin P7
+* pin P9
+* pin VDD
+* pin VSS
+.SUBCKT tr_1um_Qdai02 P1 P10 P11 P12 P13 P14 P15 P2 P3 P4 P5 P6 P7 P9 VDD VSS
+* cell instance $1 r0 *1 -254.4,-516.3
+X$1 P7 \$19 P4 VSS inverter_Kenji_Matsushita
+* cell instance $2 r0 *1 0,0
+X$2 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
+* cell instance $3 r0 *1 39.3,-467.8
+X$3 P9 P4 \$19 VSS inverter_Masayuki_Senoo
+* cell instance $4 r0 *1 378.1,-515.1
+X$4 P4 \$19 P10 VSS inverter_Mia_Kawano
+* cell instance $5 r0 *1 -616.1,-494.4
+X$5 P4 P6 \$19 VSS inverter_Kazuki_Arata
+* cell instance $6 r0 *1 -682,561.6
+X$6 P4 P3 \$19 VSS inverter_DAI_YIFAN
+* cell instance $7 r0 *1 -466.8,583.1
+X$7 \$19 P2 P4 VSS inverter_Hiroki_Otsuyama
+* cell instance $8 r0 *1 662.5,-464.9
+X$8 \$19 P4 P11 VSS inverter_Nayuta_Kohira
+* cell instance $9 r0 *1 217.6,522.5
+X$9 P15 \$19 P4 VSS inverter_Imoto_Ayana
+* cell instance $10 r0 *1 554.9,511.2
+X$10 \$19 P4 P14 VSS inverter_JuniusPuratama_SHIRO
+* cell instance $11 r0 *1 -32.6,546
+X$11 P4 P1 \$19 VSS inverter_Hisashi_Kino
+.ENDS tr_1um_Qdai02
+
+* cell inverter_Mia_Kawano
+* pin A
+* pin VDD
+* pin Q
+* pin VSS
+.SUBCKT inverter_Mia_Kawano A VDD Q VSS
+* device instance $1 r0 *1 -0.3,0.2 PMOS
+XM$1 VDD A Q VDD PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r0 *1 -0.4,-27.9 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Mia_Kawano
+
+* cell inverter_Nayuta_Kohira
+* pin VDD
+* pin A
+* pin Q
+* pin VSS
+.SUBCKT inverter_Nayuta_Kohira VDD A Q VSS
+* device instance $1 r0 *1 -1.3,-0.1 PMOS
+XM$1 VDD A Q VDD PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r0 *1 -1.3,-21.6 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Nayuta_Kohira
+
+* cell inverter_Kenji_Matsushita
+* pin Q
+* pin VDD
+* pin A
+* pin VSS
+.SUBCKT inverter_Kenji_Matsushita Q VDD A VSS
+* device instance $1 r0 *1 1.5,3.1 PMOS
+XM$1 VDD A Q VDD PMOS L=1u W=8u AS=22.4p AD=22.4p PS=21.6u PD=21.6u
+* device instance $2 r0 *1 1.5,-35.7 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Kenji_Matsushita
+
+* cell inverter_Kazuki_Arata
+* pin A
+* pin Q
+* pin Vdd
+* pin Vgnd
+.SUBCKT inverter_Kazuki_Arata A Q Vdd Vgnd
+* device instance $1 r180 *1 2.5,7.2 PMOS
+XM$1 Q A Vdd Vdd PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r180 *1 2.5,-15.6 NMOS
+XM$2 Q A Vgnd Vgnd NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Kazuki_Arata
+
+* cell inverter_Hisashi_Kino
+* pin A
+* pin Q
+* pin VDD
+* pin VSS
+.SUBCKT inverter_Hisashi_Kino A Q VDD VSS
+* device instance $1 r0 *1 0,26.2 PMOS
+XM$1 VDD A Q VDD PMOS L=1u W=8.2u AS=22.96p AD=22.96p PS=22u PD=22u
+* device instance $2 r0 *1 0,0 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Hisashi_Kino
+
+* cell inverter_DAI_YIFAN
+* pin A
+* pin Q
+* pin VDD
+* pin VSS
+.SUBCKT inverter_DAI_YIFAN A Q VDD VSS
+* device instance $1 r90 *1 -0.2,0.2 PMOS
+XM$1 Q A VDD VDD PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r90 *1 0.1,-27.8 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_DAI_YIFAN
+
+* cell inverter_Hiroki_Otsuyama
+* pin VDD
+* pin Q
+* pin A
+* pin VSS
+.SUBCKT inverter_Hiroki_Otsuyama VDD Q A VSS
+* device instance $1 r0 *1 5.7,1 PMOS
+XM$1 VDD A Q VDD PMOS L=1u W=8u AS=22.4p AD=22.4p PS=21.6u PD=21.6u
+* device instance $2 r0 *1 5.7,-32.2 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Hiroki_Otsuyama
+
+* cell inverter_JuniusPuratama_SHIRO
+* pin VDD
+* pin A
+* pin Q
+* pin VSS
+.SUBCKT inverter_JuniusPuratama_SHIRO VDD A Q VSS
+* device instance $1 r0 *1 2,18 PMOS
+XM$1 VDD A Q VDD PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r0 *1 2,-7.6 NMOS
+XM$2 VSS A Q VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_JuniusPuratama_SHIRO
+
+* cell inverter_Imoto_Ayana
+* pin vout
+* pin VDD
+* pin vin
+* pin VSS
+.SUBCKT inverter_Imoto_Ayana vout VDD vin VSS
+* device instance $1 r0 *1 8.7,0.2 PMOS
+XM$1 VDD vin vout VDD PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r0 *1 9,-22 NMOS
+XM$2 VSS vin vout VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Imoto_Ayana
+
+* cell inverter_Masayuki_Senoo
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT inverter_Masayuki_Senoo \$1 \$2 \$3 VSS
+* device instance $1 r0 *1 -6.3,8.7 PMOS
+XM$1 \$3 \$2 \$1 \$3 PMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+* device instance $2 r0 *1 -6.3,-15.2 NMOS
+XM$2 VSS \$2 \$1 VSS NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
+.ENDS inverter_Masayuki_Senoo
+
+* cell OSS_FRAME
+* pin P13
+* pin P11
+* pin P4
+* pin P15
+* pin P14
+* pin P5
+* pin VDD
+* pin P2
+* pin P3
+* pin P7
+* pin P1
+* pin P6
+* pin P9
+* pin P12
+* pin P10
+* pin VSS
+.SUBCKT OSS_FRAME P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS
+* cell instance $1 r90 *1 1040,200
+X$1 P13 VDD VSS OSS_ESD_5V_ANA
+* cell instance $2 r90 *1 1040,-600
+X$2 P11 VDD VSS OSS_ESD_5V_ANA
+* cell instance $3 m45 *1 -1040,200
+X$3 P4 VDD VSS OSS_ESD_5V_ANA
+* cell instance $4 r180 *1 600,1040
+X$4 P15 VDD VSS OSS_ESD_5V_ANA
+* cell instance $5 m135 *1 1040,600
+X$5 P14 VDD VSS OSS_ESD_5V_ANA
+* cell instance $6 r270 *1 -1040,-200
+X$6 P5 VDD VSS OSS_ESD_5V_ANA
+* cell instance $10 m45 *1 -1040,-600
+X$10 P6 VDD VSS OSS_ESD_5V_ANA
+* cell instance $11 m135 *1 1040,-200
+X$11 P12 VDD VSS OSS_ESD_5V_ANA
+* cell instance $12 m90 *1 600,-1040
+X$12 P10 VDD VSS OSS_ESD_5V_ANA
+* cell instance $14 m0 *1 -600,1040
+X$14 P2 VDD VSS OSS_ESD_5V_ANA
+* cell instance $15 r270 *1 -1040,600
+X$15 P3 VDD VSS OSS_ESD_5V_ANA
+* cell instance $16 r180 *1 -200,1040
+X$16 P1 VDD VSS OSS_ESD_5V_ANA
+* cell instance $17 m0 *1 200,1040
+X$17 VDD VSS OSS_ESD_5V_VDD
+* cell instance $18 r0 *1 -600,-1040
+X$18 P7 VDD VSS OSS_ESD_5V_ANA
+* cell instance $19 r0 *1 200,-1040
+X$19 P9 VDD VSS OSS_ESD_5V_ANA
+* cell instance $20 m90 *1 -200,-1040
+X$20 VDD VSS OSS_ESD_5V_VSS
+.ENDS OSS_FRAME
+
+* cell OSS_ESD_5V_VDD
+* pin PAD,VDD
+* pin VSS
+.SUBCKT OSS_ESD_5V_VDD PAD|VDD VSS
+* cell instance $1 r90 *1 -130,0
+X$1 PAD|VDD PAD|VDD OSS_PCH_ESD
+* cell instance $3 r90 *1 130,0
+X$3 PAD|VDD VSS OSS_NCH_ESD
+.ENDS OSS_ESD_5V_VDD
+
+* cell OSS_ESD_5V_VSS
+* pin VDD
+* pin PAD,VSS
+.SUBCKT OSS_ESD_5V_VSS VDD PAD|VSS
+* cell instance $1 r90 *1 -130,0
+X$1 PAD|VSS VDD OSS_PCH_ESD
+* cell instance $2 r90 *1 130,0
+X$2 PAD|VSS PAD|VSS OSS_NCH_ESD
+.ENDS OSS_ESD_5V_VSS
+
+* cell OSS_ESD_5V_ANA
+* pin PAD
+* pin VDD
+* pin VSS
+.SUBCKT OSS_ESD_5V_ANA PAD VDD VSS
+* cell instance $2 r90 *1 -130,0
+X$2 PAD VDD OSS_PCH_ESD
+* cell instance $3 r90 *1 130,0
+X$3 PAD VSS OSS_NCH_ESD
+.ENDS OSS_ESD_5V_ANA
+
+* cell OSS_PCH_ESD
+* pin PAD
+* pin VDD
+.SUBCKT OSS_PCH_ESD PAD VDD
+* device instance $1 r0 *1 -65.5,0 PMOS
+XM$1 PAD VDD VDD VDD PMOS L=2u W=500u AS=3523.04p AD=3523.04p PS=689.36u
++ PD=689.36u
+.ENDS OSS_PCH_ESD
+
+* cell OSS_NCH_ESD
+* pin PAD
+* pin VSS
+.SUBCKT OSS_NCH_ESD PAD VSS
+* device instance $1 r0 *1 -65.5,0 NMOSE
+XM$1 PAD VSS VSS VSS NMOSE L=2u W=500u AS=3523.04p AD=3523.04p PS=689.36u
++ PD=689.36u
+.ENDS OSS_NCH_ESD
