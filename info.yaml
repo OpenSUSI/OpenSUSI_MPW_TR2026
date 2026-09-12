@@ -67,11 +67,11 @@ xy_mark:
 
   placement:
     x: -1120.0
-    y: -900.0
+    y: -910.0
 
   text_gds: logos/NUMBERS.gds
 
-  line_pitch: 18.0
+  line_pitch: 9.0
 
   lines:
     - "OPENSUSI"
