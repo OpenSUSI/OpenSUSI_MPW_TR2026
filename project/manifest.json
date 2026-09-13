@@ -276,10 +276,10 @@
       "row": 1,
       "col": 7,
       "submissionSequence": 15,
-      "normalizedRepoName": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_ichiken_01",
+      "normalizedRepoName": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_SiCA_01",
       "orderId": "ORD-260828-042453-05",
-      "sourceRepo": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_ichiken_01",
-      "sourceRunId": "33945552963",
+      "sourceRepo": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_SiCA_01",
+      "sourceRunId": "34771788182",
       "sourceArtifactName": "GDSII_MDP"
     },
     {
