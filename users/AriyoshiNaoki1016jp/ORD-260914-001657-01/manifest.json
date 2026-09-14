@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260914-001657-01",
+  "submissionSequence": 32,
+  "githubId": "AriyoshiNaoki1016jp",
+  "sourceRepo": "AriyoshiNaoki1016jp/TR-1um_AriyoshiNaoki1016jp",
+  "sourceRunId": "34607568395",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "AriyoshiNaoki1016jp/TR-1um_AriyoshiNaoki1016jp",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260914_001657_01",
+  "gdsiiDrawingFiles": "tr_1um_AriyoshiNaoki1016jp.gds",
+  "extractedFiles": "tr_1um_AriyoshiNaoki1016jp.extracted"
+}
