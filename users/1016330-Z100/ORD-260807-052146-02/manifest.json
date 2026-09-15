@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260807-052146-02",
+  "submissionSequence": 34,
+  "githubId": "1016330-Z100",
+  "sourceRepo": "1016330-Z100/TR-1um_ai_icc2",
+  "sourceRunId": "34815816534",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "1016330-Z100/TR-1um_ai_icc2",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260807_052146_02",
+  "gdsiiDrawingFiles": "HHTT2602.gds",
+  "extractedFiles": "HHTT2602.extracted"
+}
