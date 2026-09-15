@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260914-001614-01",
+  "submissionSequence": 33,
+  "githubId": "regymm",
+  "sourceRepo": "regymm/TrialDesign-TR-1um_MPW",
+  "sourceRunId": "34921746233",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "regymm/TrialDesign-TR-1um_MPW",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260914_001614_01",
+  "gdsiiDrawingFiles": "tr_1um_regymm.gds",
+  "extractedFiles": "tr_1um_regymm.extracted"
+}
