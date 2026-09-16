@@ -20,7 +20,7 @@
 * pin VSS
 .SUBCKT tr_1um_SiCA07 P1 P10 P11 P12 P13 P14 P15 P2 P3 P4 P5 P6 P7 P9 VDD VSS
 * cell instance $2 r0 *1 -221.4,409.6
-X$2 P1 P2 P4 P3 P14 P15 P13 VSS \$2 1bitCPU_Haruto_Tanaka
+X$2 P1 P2 P3 P4 P14 P15 P13 VSS \$2 1bitCPU_Haruto_Tanaka
 * cell instance $3 r0 *1 0,0
 X$3 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
 * cell instance $7 r0 *1 -353.7,-561
@@ -66,48 +66,48 @@ XC$143 \$24 out vss F_CSIO C=8.64e-12 A=14400p P=480u X=120 Y=120 m=1
 * cell 1bitCPU_Haruto_Tanaka
 * pin PC0
 * pin REG0
-* pin CK
 * pin RST
+* pin CK
 * pin PROG1
 * pin PC1
 * pin PROG0
 * pin VSS
 * pin 
-.SUBCKT 1bitCPU_Haruto_Tanaka PC0 REG0 CK RST PROG1 PC1 PROG0 VSS \$I12
+.SUBCKT 1bitCPU_Haruto_Tanaka PC0 REG0 RST CK PROG1 PC1 PROG0 VSS \$I12
 * cell instance $1 r0 *1 88,0
-X$1 CK \$10 RST \$26 PC0 \$I12 VSS DFFR
+X$1 CK \$10 RST \$29 PC0 \$I12 VSS DFFR$1
 * cell instance $3 r0 *1 176,0
-X$3 \$I12 PC0 PC1 VSS INV_X1
-* cell instance $6 r0 *1 412.5,0
-X$6 \$I12 \$15 \$3 \$49 VSS AND2_X1
-* cell instance $7 r0 *1 379.5,0
-X$7 \$I12 PROG0 \$3 VSS INV_X1
-* cell instance $8 r0 *1 341,0
-X$8 \$I12 \$3 \$50 VSS INV_X1
-* cell instance $9 r0 *1 242,0
-X$9 \$30 \$35 \$I12 \$3 VSS NAND2
-* cell instance $15 r0 *1 275,0
-X$15 \$I12 \$3 \$7 \$34 VSS AND2_X1
-* cell instance $21 r0 *1 209,0
-X$21 REG0 \$5 \$I12 \$30 VSS NAND2
-* cell instance $22 r0 *1 297,0
-X$22 \$I12 REG0 \$28 \$29 VSS AND2_X1
-* cell instance $24 r0 *1 192.5,0
-X$24 REG0 \$15 \$I12 \$5 VSS NAND2
-* cell instance $29 r0 *1 0,0
-X$29 CK \$12 RST \$I111 REG0 \$I12 VSS DFFR
-* cell instance $33 r0 *1 225.5,0
-X$33 \$5 \$15 \$I12 \$35 VSS NAND2
-* cell instance $43 r0 *1 258.5,0
-X$43 \$I12 \$28 \$7 VSS INV_X1
-* cell instance $50 r0 *1 434.5,0
-X$50 \$I12 \$13 \$49 \$10 VSS OR2
-* cell instance $58 r0 *1 319,0
-X$58 \$I12 \$29 \$29 \$12 VSS OR2
-* cell instance $60 r0 *1 357.5,0
-X$60 \$I12 \$26 \$50 \$13 VSS AND2_X1
-* cell instance $65 r0 *1 396,0
-X$65 \$I12 PROG1 \$15 VSS INV_X1
+X$3 \$I12 PC0 PC1 VSS INV_X1$1
+* cell instance $6 r0 *1 242,0
+X$6 \$31 \$36 \$I12 \$3 VSS NAND2$1
+* cell instance $11 r0 *1 275,0
+X$11 \$I12 \$3 \$7 \$6 VSS AND2_X1$1
+* cell instance $12 r0 *1 209,0
+X$12 REG0 \$8 \$I12 \$31 VSS NAND2$1
+* cell instance $13 r0 *1 297,0
+X$13 \$I12 REG0 \$23 \$25 VSS AND2_X1$1
+* cell instance $16 r0 *1 0,0
+X$16 CK \$12 RST \$I111 REG0 \$I12 VSS DFFR$1
+* cell instance $21 r0 *1 192.5,0
+X$21 REG0 \$16 \$I12 \$8 VSS NAND2$1
+* cell instance $29 r0 *1 319,0
+X$29 \$I12 \$6 \$25 \$12 VSS OR2$1
+* cell instance $33 r0 *1 258.5,0
+X$33 \$I12 \$23 \$7 VSS INV_X1$1
+* cell instance $36 r0 *1 225.5,0
+X$36 \$8 \$16 \$I12 \$36 VSS NAND2$1
+* cell instance $46 r0 *1 434.5,0
+X$46 \$I12 \$14 \$45 \$10 VSS OR2$1
+* cell instance $55 r0 *1 357.5,0
+X$55 \$I12 \$29 \$46 \$14 VSS AND2_X1$1
+* cell instance $60 r0 *1 396,0
+X$60 \$I12 PROG1 \$16 VSS INV_X1$1
+* cell instance $62 r0 *1 412.5,0
+X$62 \$I12 \$16 \$23 \$45 VSS AND2_X1$1
+* cell instance $71 r0 *1 379.5,0
+X$71 \$I12 PROG0 \$23 VSS INV_X1$1
+* cell instance $73 r0 *1 341,0
+X$73 \$I12 \$23 \$46 VSS INV_X1$1
 .ENDS 1bitCPU_Haruto_Tanaka
 
 * cell OSS_FRAME
@@ -162,13 +162,13 @@ X$19 P9 VDD VSS OSS_ESD_5V_ANA
 X$20 VDD VSS OSS_ESD_5V_VSS
 .ENDS OSS_FRAME
 
-* cell OR2
+* cell OR2$1
 * pin vdd
 * pin A
 * pin B
 * pin Y
 * pin gnd
-.SUBCKT OR2 vdd A B Y gnd
+.SUBCKT OR2$1 vdd A B Y gnd
 * device instance $1 r0 *1 6.1,44.8 PMOS
 XM$1 \$4 A \$7 vdd PMOS L=1u W=10.2u AS=28.56p AD=15.3p PS=26u PD=13.2u
 * device instance $2 r0 *1 10.1,44.8 PMOS
@@ -181,15 +181,15 @@ XM$4 gnd A \$4 gnd NMOS L=1u W=3.4u AS=9.52p AD=5.1p PS=12.4u PD=6.4u
 XM$5 \$4 B gnd gnd NMOS L=1u W=3.4u AS=5.1p AD=5.1p PS=6.4u PD=6.4u
 * device instance $6 r0 *1 14.1,6.8 NMOS
 XM$6 gnd \$4 Y gnd NMOS L=1u W=3.4u AS=5.1p AD=9.52p PS=6.4u PD=12.4u
-.ENDS OR2
+.ENDS OR2$1
 
-* cell AND2_X1
+* cell AND2_X1$1
 * pin vdd
 * pin A
 * pin B
 * pin Y
 * pin gnd
-.SUBCKT AND2_X1 vdd A B Y gnd
+.SUBCKT AND2_X1$1 vdd A B Y gnd
 * device instance $1 r0 *1 6.1,44.8 PMOS
 XM$1 vdd A \$4 vdd PMOS L=1u W=10.2u AS=28.56p AD=15.3p PS=26u PD=13.2u
 * device instance $2 r0 *1 10.1,44.8 PMOS
@@ -202,9 +202,9 @@ XM$4 \$4 A \$7 gnd NMOS L=1u W=3.4u AS=9.52p AD=5.1p PS=12.4u PD=6.4u
 XM$5 \$7 B gnd gnd NMOS L=1u W=3.4u AS=5.1p AD=5.1p PS=6.4u PD=6.4u
 * device instance $6 r0 *1 14.1,6.8 NMOS
 XM$6 gnd \$4 Y gnd NMOS L=1u W=3.4u AS=5.1p AD=9.52p PS=6.4u PD=12.4u
-.ENDS AND2_X1
+.ENDS AND2_X1$1
 
-* cell DFFR
+* cell DFFR$1
 * pin CK
 * pin D
 * pin RST
@@ -212,7 +212,7 @@ XM$6 gnd \$4 Y gnd NMOS L=1u W=3.4u AS=5.1p AD=9.52p PS=6.4u PD=12.4u
 * pin Q
 * pin vdd
 * pin gnd
-.SUBCKT DFFR CK D RST QB Q vdd gnd
+.SUBCKT DFFR$1 CK D RST QB Q vdd gnd
 * device instance $1 r0 *1 75.7,44.8 PMOS
 XM$1 QB \$11 vdd vdd PMOS L=1u W=10.2u AS=28.56p AD=15.3p PS=26u PD=13.2u
 * device instance $2 r0 *1 79.7,44.8 PMOS
@@ -281,27 +281,27 @@ XM$32 \$15 \$8 gnd gnd NMOS L=1u W=3.4u AS=2.38p AD=5.1p PS=4.8u PD=6.4u
 XM$33 gnd \$7 \$8 gnd NMOS L=1u W=3.4u AS=5.1p AD=5.1p PS=6.4u PD=6.4u
 * device instance $34 r0 *1 42.9,6.8 NMOS
 XM$34 \$8 RST gnd gnd NMOS L=1u W=3.4u AS=5.1p AD=9.52p PS=6.4u PD=12.4u
-.ENDS DFFR
+.ENDS DFFR$1
 
-* cell INV_X1
+* cell INV_X1$1
 * pin vdd
 * pin A
 * pin Y
 * pin gnd
-.SUBCKT INV_X1 vdd A Y gnd
+.SUBCKT INV_X1$1 vdd A Y gnd
 * device instance $1 r0 *1 6.1,44.8 PMOS
 XM$1 vdd A Y vdd PMOS L=1u W=10.2u AS=28.56p AD=28.56p PS=26u PD=26u
 * device instance $2 r0 *1 6.1,6.8 NMOS
 XM$2 gnd A Y gnd NMOS L=1u W=3.4u AS=9.52p AD=9.52p PS=12.4u PD=12.4u
-.ENDS INV_X1
+.ENDS INV_X1$1
 
-* cell NAND2
+* cell NAND2$1
 * pin A
 * pin B
 * pin vdd
 * pin Y
 * pin gnd
-.SUBCKT NAND2 A B vdd Y gnd
+.SUBCKT NAND2$1 A B vdd Y gnd
 * device instance $1 r0 *1 6.1,44.8 PMOS
 XM$1 vdd A Y vdd PMOS L=1u W=10.2u AS=28.56p AD=15.3p PS=26u PD=13.2u
 * device instance $2 r0 *1 10.1,44.8 PMOS
@@ -310,7 +310,7 @@ XM$2 Y B vdd vdd PMOS L=1u W=10.2u AS=15.3p AD=28.56p PS=13.2u PD=26u
 XM$3 gnd A \$5 gnd NMOS L=1u W=3.4u AS=9.52p AD=5.1p PS=12.4u PD=6.4u
 * device instance $4 r0 *1 10.1,6.8 NMOS
 XM$4 \$5 B Y gnd NMOS L=1u W=3.4u AS=5.1p AD=9.52p PS=6.4u PD=12.4u
-.ENDS NAND2
+.ENDS NAND2$1
 
 * cell OSS_ESD_5V_VDD
 * pin PAD,VDD
