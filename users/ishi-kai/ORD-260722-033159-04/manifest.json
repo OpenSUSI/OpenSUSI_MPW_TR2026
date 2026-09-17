@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260722-033159-04",
+  "submissionSequence": 43,
+  "githubId": "ishi-kai",
+  "sourceRepo": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_AUDIO_OPAMP04",
+  "sourceRunId": "35194959521",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_AUDIO_OPAMP04",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260722_033159_04",
+  "gdsiiDrawingFiles": "tr_1um_AUDIO_OPAMP04.gds",
+  "extractedFiles": "tr_1um_AUDIO_OPAMP04.extracted"
+}
