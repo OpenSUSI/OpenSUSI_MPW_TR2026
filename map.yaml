@@ -9,13 +9,73 @@ tile_num:
     right_bottom: OpenSUSI_LOGO.gds
 
   "1":
-    left_top    : RISE-A.gds
+    left_top    : OpenSUSI_LOGO.gds
     right_top   : OpenSUSI_LOGO.gds
-    right_bottom: OpenSUSI_LOGO.gds
 
   "2":
     left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
 
   "3":
     right_top   : OpenSUSI_LOGO.gds    
+    right_top   : OpenSUSI_LOGO.gds
 
+  "21":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "22":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "23":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "24":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "25":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "26":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "40":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "41":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "42":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "43":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "44":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "45":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "46":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "47":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
+
+  "48":
+    left_top    : RISE-A.gds
+    right_top   : RISE-A.gds
