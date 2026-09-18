@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260918-052358-02",
+  "submissionSequence": 51,
+  "githubId": "ishi-kai",
+  "sourceRepo": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_OpenSUSI02",
+  "sourceRunId": "35325332472",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "ishi-kai/ISHI-KAI_Multiple_Projects_OpenMPW_OpenSUSI-TR10-1_OpenSUSI02",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260918_052358_02",
+  "gdsiiDrawingFiles": "tr_1um_OpenSUSI02.gds",
+  "extractedFiles": "tr_1um_OpenSUSI02.extracted"
+}
