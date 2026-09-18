@@ -18,11 +18,74 @@
 * pin P9
 * pin VDD
 * pin VSS
+* pin fg
 .SUBCKT tr_1um_fujimoto_kuniaki2 P1 P10 P11 P12 P13 P14 P15 P2 P3 P4 P5 P6 P7
-+ P9 VDD VSS
++ P9 VDD VSS fg
 * cell instance $1 r0 *1 0,0
 X$1 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
+* cell instance $2 r0 *1 -698,250
+X$2 P7 P3 VDD VSS inv_ckb
+* cell instance $9 r0 *1 -840,-1000
+X$9 VDD fg P10 VSS judge
+* cell instance $81 r0 *1 -654,250
+X$81 P2 P3 VDD VSS inv_ckb
+* cell instance $82 r0 *1 -742,250
+X$82 P6 P3 VDD VSS inv_ckb
+* cell instance $83 r0 *1 740,-420
+X$83 P15 \$47 VDD VSS inv_ckb
+* cell instance $84 r0 *1 -830,250
+X$84 P4 P3 VDD VSS inv_ckb
+* cell instance $85 r0 *1 -786,250
+X$85 P5 P3 VDD VSS inv_ckb
+* device instance $1 r0 *1 780,-795 PMOS
+XM$1 VDD P9 \$53 VDD PMOS L=5u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $2 r0 *1 720,-795 PMOS
+XM$2 VDD fg \$47 VDD PMOS L=5u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $3 r0 *1 760,-795 PMOS
+XM$3 \$47 P9 fg VDD PMOS L=5u W=5u AS=14p AD=14p PS=15.6u PD=15.6u
+* device instance $4 r0 *1 780,-725 NMOS
+XM$4 VSS P9 \$53 VSS NMOS L=5u W=5u AS=14p AD=14p PS=15.6u PD=15.6u
+* device instance $5 r0 *1 760,-725 NMOS
+XM$5 \$47 \$53 fg VSS NMOS L=5u W=5u AS=14p AD=14p PS=15.6u PD=15.6u
+* device instance $6 r0 *1 720,-725 NMOS
+XM$6 VSS fg \$47 VSS NMOS L=5u W=5u AS=14p AD=14p PS=15.6u PD=15.6u
+* device instance $7 r0 *1 -200,-770 F_CSIO
+XC$7 fg P11 VSS F_CSIO C=7.326e-12 A=12210p P=442u X=110 Y=111 m=1
+* device instance $8 r0 *1 200,-770 F_CSIO
+XC$8 fg P13 VSS F_CSIO C=7.326e-12 A=12210p P=442u X=110 Y=111 m=1
+* device instance $9 r0 *1 400,-770 F_CSIO
+XC$9 fg P14 VSS F_CSIO C=7.326e-12 A=12210p P=442u X=110 Y=111 m=1
+* device instance $10 r0 *1 0,-770 F_CSIO
+XC$10 fg P12 VSS F_CSIO C=7.326e-12 A=12210p P=442u X=110 Y=111 m=1
 .ENDS tr_1um_fujimoto_kuniaki2
+
+* cell judge
+* pin vdd
+* pin fg
+* pin fgmon
+* pin vss
+.SUBCKT judge vdd fg fgmon vss
+* device instance $1 r0 *1 1568,496 PMOS
+XM$1 vdd vss \$2 vdd PMOS L=5u W=5u AS=14p AD=14p PS=15.6u PD=15.6u
+* device instance $2 r0 *1 1608,386 NMOS
+XM$2 fgmon \$2 vss vss NMOS L=5u W=5u AS=14p AD=14p PS=15.6u PD=15.6u
+* device instance $3 r0 *1 1544,386 NMOS
+XM$3 vss \$2 \$2 vss NMOS L=5u W=60u AS=116p AD=116p PS=91.6u PD=91.6u
+* device instance $6 r0 *1 1584,386 NMOS
+XM$6 vdd fg fgmon vss NMOS L=5u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+.ENDS judge
+
+* cell inv_ckb
+* pin clkb
+* pin clk
+* pin vdd
+* pin vss
+.SUBCKT inv_ckb clkb clk vdd vss
+* device instance $1 r0 *1 8,93 PMOS
+XM$1 vdd clk clkb vdd PMOS L=5u W=80u AS=146p AD=146p PS=114.6u PD=114.6u
+* device instance $5 r0 *1 20,21 NMOS
+XM$5 vss clk clkb vss NMOS L=5u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+.ENDS inv_ckb
 
 * cell OSS_FRAME
 * pin P13
