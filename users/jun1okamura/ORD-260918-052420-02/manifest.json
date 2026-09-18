@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260918-052420-02",
+  "submissionSequence": 57,
+  "githubId": "jun1okamura",
+  "sourceRepo": "jun1okamura/TR-1um_TD4",
+  "sourceRunId": "35322598355",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "jun1okamura/TR-1um_TD4",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260918_052420_02",
+  "gdsiiDrawingFiles": "tr_1um_jun1okamura_td4.gds",
+  "extractedFiles": "tr_1um_jun1okamura_td4.extracted"
+}
