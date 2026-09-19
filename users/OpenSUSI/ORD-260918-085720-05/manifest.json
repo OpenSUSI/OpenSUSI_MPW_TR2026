@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260918-085720-05",
+  "submissionSequence": 60,
+  "githubId": "OpenSUSI",
+  "sourceRepo": "OpenSUSI/TR-1um_LOGO_AISol",
+  "sourceRunId": "35409252880",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "OpenSUSI/TR-1um_LOGO_AISol",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260918_085720_05",
+  "gdsiiDrawingFiles": "tr_1um_opensusi_logo_aisol.gds",
+  "extractedFiles": "tr_1um_opensusi_logo_aisol.extracted"
+}
