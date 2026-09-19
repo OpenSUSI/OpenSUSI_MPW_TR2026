@@ -1014,21 +1014,21 @@
       "sourceArtifactName": "GDSII_MDP"
     },
     {
-      "type": "fill",
-      "githubId": "000_system",
-      "gdsFile": "users/000_system/GDSII_FILL.gds",
-      "gdsTopCell": "tr_1um_000_system",
+      "type": "user",
+      "githubId": "OpenSUSI",
+      "gdsFile": "users/OpenSUSI/ORD-260918-085720-05/GDSII_MDP.gds",
+      "gdsTopCell": "ORD_260918_085720_05",
       "x": -1250.0,
       "y": -8750.0,
       "tileIndex": 59,
       "row": 7,
       "col": 3,
-      "submissionSequence": null,
-      "normalizedRepoName": null,
-      "orderId": null,
-      "sourceRepo": null,
-      "sourceRunId": null,
-      "sourceArtifactName": null
+      "submissionSequence": 60,
+      "normalizedRepoName": "OpenSUSI/TR-1um_LOGO_AISol",
+      "orderId": "ORD-260918-085720-05",
+      "sourceRepo": "OpenSUSI/TR-1um_LOGO_AISol",
+      "sourceRunId": "35409252880",
+      "sourceArtifactName": "GDSII_MDP"
     },
     {
       "type": "fill",
