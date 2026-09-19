@@ -79,3 +79,40 @@ tile_num:
   "48":
     left_top    : RISE-A.gds
     right_top   : RISE-A.gds
+
+  "55":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "56":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "57":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "58":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "59":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "60":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "61":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "62":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
+  "63":
+    left_top    : OpenSUSI_LOGO.gds
+    right_top   : OpenSUSI_LOGO.gds
+
