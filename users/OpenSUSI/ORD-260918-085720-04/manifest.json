@@ -1,0 +1,13 @@
+{
+  "orderId": "ORD-260918-085720-04",
+  "submissionSequence": 59,
+  "githubId": "OpenSUSI",
+  "sourceRepo": "OpenSUSI/TR-1um_LOGO_MEXT",
+  "sourceRunId": "35409270681",
+  "sourceArtifactName": "GDSII_MDP",
+  "normalizedRepoName": "OpenSUSI/TR-1um_LOGO_MEXT",
+  "gdsFile": "GDSII_MDP.gds",
+  "gdsTopCell": "ORD_260918_085720_04",
+  "gdsiiDrawingFiles": "tr_1um_opensusi_logo_mext.gds",
+  "extractedFiles": "tr_1um_opensusi_logo_mext.extracted"
+}
