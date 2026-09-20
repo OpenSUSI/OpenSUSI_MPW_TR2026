@@ -20,9 +20,45 @@
 * pin VSS
 .SUBCKT tr_1um_GnumaKosen P1 P10 P11 P12 P13 P14 P15 P2 P3 P4 P5 P6 P7 P9 VDD
 + VSS
-* cell instance $1 r0 *1 0,0
-X$1 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
+* cell instance $2 r0 *1 -94.6,682.9
+X$2 P14 P2 P3 \$1 VSS OPAF001
+* cell instance $3 r0 *1 0,0
+X$3 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
 .ENDS tr_1um_GnumaKosen
+
+* cell OPAF001
+* pin Vout
+* pin Vinn
+* pin Vinp
+* pin VDD
+* pin VSS
+.SUBCKT OPAF001 Vout Vinn Vinp VDD VSS
+* device instance $1 r0 *1 35.5,37.9 PMOS
+XM$1 VDD \$40 \$40 VDD PMOS L=1u W=50u AS=140p AD=140p PS=105.6u PD=105.6u
+* device instance $2 r0 *1 47.9,37.9 PMOS
+XM$2 \$41 \$40 VDD VDD PMOS L=1u W=50u AS=140p AD=140p PS=105.6u PD=105.6u
+* device instance $3 m90 *1 233,14.1 PMOS
+XM$3 Vout \$41 VDD VDD PMOS L=1u W=1350u AS=2090p AD=2090p PS=1483.6u PD=1483.6u
+* device instance $30 r0 *1 17.5,-110 NMOS
+XM$30 VSS \$16 \$16 VSS NMOS L=1u W=20u AS=56p AD=56p PS=45.6u PD=45.6u
+* device instance $31 r0 *1 13.5,-35.6 NMOS
+XM$31 \$18 Vinn \$40 VSS NMOS L=1u W=115u AS=202.4p AD=202.4p PS=155.6u
++ PD=155.6u
+* device instance $36 r0 *1 45.9,-35.6 NMOS
+XM$36 \$41 Vinp \$18 VSS NMOS L=1u W=115u AS=202.4p AD=202.4p PS=155.6u
++ PD=155.6u
+* device instance $41 r180 *1 305.3,-90.9 NMOS
+XM$41 VSS \$16 Vout VSS NMOS L=1u W=2450u AS=3740p AD=3740p PS=2649.6u
++ PD=2649.6u
+* device instance $90 r0 *1 35.2,-102.6 NMOS
+XM$90 VSS \$16 \$18 VSS NMOS L=1u W=175u AS=308p AD=308p PS=227.6u PD=227.6u
+* device instance $95 r270 *1 88.7,-47 F_RS
+XR$95 \$41 \$3 F_RS R=9.25 L=37u W=4u A=148p P=82u m=1
+* device instance $105 r0 *1 -82.9,74.2 F_RS
+XR$105 VDD \$16 F_RS R=25 L=2300u W=4u A=400p P=208u m=1
+* device instance $119 r270 *1 -36.1,-219 F_CSIO
+XC$119 \$3 Vout VSS F_CSIO C=8.64e-12 A=14400p P=480u X=120 Y=120 m=3
+.ENDS OPAF001
 
 * cell OSS_FRAME
 * pin P13
