@@ -19,8 +19,11 @@
 * pin VDD
 * pin VSS
 .SUBCKT tr_1um_Kosen04 P1 P10 P11 P12 P13 P14 P15 P2 P3 P4 P5 P6 P7 P9 VDD VSS
-* cell instance $1 r0 *1 0,0
-X$1 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
+* cell instance $1 r0 *1 125,-323.1
+X$1 P9 \$10 P15 VSS P11 P4 P14 P7 P5 P6 P13 P12 P2 P3 P10
++ single_end_double_balanced_passive_switch_mixer
+* cell instance $3 r0 *1 0,0
+X$3 P13 P11 P4 P15 P14 P5 VDD P2 P3 P7 P1 P6 P9 P12 P10 VSS OSS_FRAME
 .ENDS tr_1um_Kosen04
 
 * cell OSS_FRAME
@@ -75,6 +78,143 @@ X$19 P9 VDD VSS OSS_ESD_5V_ANA
 X$20 VDD VSS OSS_ESD_5V_VSS
 .ENDS OSS_FRAME
 
+* cell single_end_double_balanced_passive_switch_mixer
+* pin 
+* pin 
+* pin 
+* pin VSS
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+* pin 
+.SUBCKT single_end_double_balanced_passive_switch_mixer \$6 \$28 \$61 VSS \$I17
++ \$I16 \$I15 \$I14 \$I13 \$I12 \$I11 \$I10 \$I9 \$I8 \$I4
+* cell instance $2 r0 *1 31,-405.2
+X$2 \$6 \$2 \$I4 \$1 \$28 VSS diff_amp
+* cell instance $4 r0 *1 0,0
+X$4 \$I17 \$I11 \$I10 \$1 \$2 \$61 \$I15 VSS
++ double_balanced_passive_switch_mixer
+* cell instance $9 r0 *1 -632.6,0
+X$9 \$28 \$I8 \$I16 \$I9 VSS single_to_diff_RF
+* cell instance $12 r0 *1 -393.7,0
+X$12 \$28 \$I12 \$I14 \$I13 VSS single_to_diff_LO
+.ENDS single_end_double_balanced_passive_switch_mixer
+
+* cell diff_amp
+* pin T_BIAS
+* pin IF_N
+* pin RF_OUT
+* pin IF_P
+* pin VDD
+* pin VSS
+.SUBCKT diff_amp T_BIAS IF_N RF_OUT IF_P VDD VSS
+* device instance $1 r0 *1 -27.5,0 PMOS
+XM$1 VDD VDD \$29 VDD PMOS L=2u W=10u AS=28p AD=15p PS=31.2u PD=16u
+* device instance $2 r0 *1 -22.5,0 PMOS
+XM$2 \$29 \$29 VDD VDD PMOS L=2u W=50u AS=75p AD=75p PS=80u PD=80u
+* device instance $3 r0 *1 -17.5,0 PMOS
+XM$3 VDD \$29 RF_OUT VDD PMOS L=2u W=50u AS=75p AD=75p PS=80u PD=80u
+* device instance $12 r0 *1 27.5,0 PMOS
+XM$12 RF_OUT VDD VDD VDD PMOS L=2u W=10u AS=15p AD=28p PS=16u PD=31.2u
+* device instance $25 r0 *1 -22,-64.9 NMOS
+XM$25 VSS VSS VSS VSS NMOS L=1u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
+* device instance $26 r0 *1 -18,-64.9 NMOS
+XM$26 VSS T_BIAS \$16 VSS NMOS L=1u W=100u AS=150p AD=150p PS=130u PD=130u
+* device instance $37 r0 *1 -22,-47 NMOS
+XM$37 VSS VSS \$29 VSS NMOS L=1u W=10u AS=28p AD=15p PS=31.2u PD=16u
+* device instance $38 r0 *1 -18,-47 NMOS
+XM$38 \$29 IF_P \$16 VSS NMOS L=1u W=50u AS=75p AD=75p PS=80u PD=80u
+* device instance $39 r0 *1 -14,-47 NMOS
+XM$39 \$16 IF_N RF_OUT VSS NMOS L=1u W=50u AS=75p AD=75p PS=80u PD=80u
+* device instance $48 r0 *1 22,-47 NMOS
+XM$48 RF_OUT VSS VSS VSS NMOS L=1u W=10u AS=15p AD=28p PS=16u PD=31.2u
+* device instance $61 r90 *1 85.1,-59.3 F_CSIO
+XC$61 RF_OUT VSS VSS F_CSIO C=9.6e-13 A=1600p P=160u X=40 Y=40 m=4
+.ENDS diff_amp
+
+* cell double_balanced_passive_switch_mixer
+* pin RF_N
+* pin LO_N
+* pin LO_P
+* pin IF_P
+* pin IF_N
+* pin DC_BIAS
+* pin RF_P
+* pin VSS
+.SUBCKT double_balanced_passive_switch_mixer RF_N LO_N LO_P IF_P IF_N DC_BIAS
++ RF_P VSS
+* cell instance $1 r180 *1 91,-232
+X$1 LO_N RF_N IF_P VSS NMOS_Base
+* cell instance $2 r180 *1 211,-232
+X$2 LO_P RF_N IF_N VSS NMOS_Base
+* cell instance $3 r0 *1 120,0
+X$3 LO_N RF_P IF_N VSS NMOS_Base
+* cell instance $4 r0 *1 0,0
+X$4 LO_P RF_P IF_P VSS NMOS_Base
+* device instance $1 r0 *1 -96.8,22.6 F_RR
+XR$1 IF_P DC_BIAS DC_BIAS F_RR R=17.6428571429 L=49.4u W=2.8u A=138.32p
++ P=104.4u m=1
+* device instance $2 r0 *1 307.8,22.6 F_RR
+XR$2 DC_BIAS IF_N DC_BIAS F_RR R=17.6428571429 L=49.4u W=2.8u A=138.32p
++ P=104.4u m=1
+* device instance $3 r0 *1 105.6,85.3 F_RR
+XR$3 RF_P DC_BIAS DC_BIAS F_RR R=17.6428571429 L=49.4u W=2.8u A=138.32p
++ P=104.4u m=1
+* device instance $4 r90 *1 -84.6,-165.6 F_CSIO
+XC$4 IF_P VSS VSS F_CSIO C=4.86e-12 A=8100p P=360u X=90 Y=90 m=4
+* device instance $8 r90 *1 196.4,-66.4 F_CSIO
+XC$8 IF_N VSS VSS F_CSIO C=4.86e-12 A=8100p P=360u X=90 Y=90 m=4
+.ENDS double_balanced_passive_switch_mixer
+
+* cell single_to_diff_LO
+* pin VDD
+* pin LO_IN
+* pin LO_P
+* pin LO_N
+* pin VSS
+.SUBCKT single_to_diff_LO VDD LO_IN LO_P LO_N VSS
+* device instance $1 r0 *1 47.3,0 NMOS
+XM$1 VSS VSS LO_N VSS NMOS L=2u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
+* device instance $2 r0 *1 52.3,0 NMOS
+XM$2 LO_N LO_IN LO_P VSS NMOS L=2u W=100u AS=150p AD=150p PS=130u PD=130u
+* device instance $13 r0 *1 111,-62.4 F_RR
+XR$13 VSS LO_P VDD F_RR R=3.95 L=15.8u W=4u A=63.2p P=39.6u m=1
+* device instance $14 r0 *1 111,60 F_RR
+XR$14 VDD LO_N VDD F_RR R=3.95 L=15.8u W=4u A=63.2p P=39.6u m=1
+* device instance $15 r0 *1 55.5,-95 F_RR
+XR$15 VSS LO_IN VDD F_RR R=17.5714285714 L=98.4u W=2.8u A=137.76p P=104u m=1
+* device instance $16 r0 *1 55.5,59.4 F_RR
+XR$16 LO_IN VDD VDD F_RR R=17.5714285714 L=49.2u W=2.8u A=137.76p P=104u m=1
+.ENDS single_to_diff_LO
+
+* cell single_to_diff_RF
+* pin VDD
+* pin RF_IN
+* pin RF_P
+* pin RF_N
+* pin VSS
+.SUBCKT single_to_diff_RF VDD RF_IN RF_P RF_N VSS
+* device instance $1 r0 *1 47.3,0 NMOS
+XM$1 VSS VSS RF_N VSS NMOS L=2u W=10u AS=21.5p AD=21.5p PS=23.6u PD=23.6u
+* device instance $2 r0 *1 52.3,0 NMOS
+XM$2 RF_N RF_IN RF_P VSS NMOS L=2u W=50u AS=75p AD=75p PS=80u PD=80u
+* device instance $13 r0 *1 111,-61.8 F_RR
+XR$13 VSS RF_P VDD F_RR R=6.35714285714 L=17.8u W=2.8u A=49.84p P=41.2u m=1
+* device instance $14 r0 *1 111,59.4 F_RR
+XR$14 VDD RF_N VDD F_RR R=6.35714285714 L=17.8u W=2.8u A=49.84p P=41.2u m=1
+* device instance $15 r0 *1 55.5,-95 F_RR
+XR$15 VSS RF_IN VDD F_RR R=17.5714285714 L=98.4u W=2.8u A=137.76p P=104u m=1
+* device instance $16 r0 *1 55.5,59.4 F_RR
+XR$16 RF_IN VDD VDD F_RR R=17.5714285714 L=49.2u W=2.8u A=137.76p P=104u m=1
+.ENDS single_to_diff_RF
+
 * cell OSS_ESD_5V_VDD
 * pin PAD,VDD
 * pin VSS
@@ -105,6 +245,18 @@ X$2 PAD VDD OSS_PCH_ESD
 * cell instance $3 r90 *1 130,0
 X$3 PAD VSS OSS_NCH_ESD
 .ENDS OSS_ESD_5V_ANA
+
+* cell NMOS_Base
+* pin 
+* pin 
+* pin 
+* pin VSS
+.SUBCKT NMOS_Base \$2 \$9 \$12 VSS
+* device instance $1 r0 *1 22.3,27.2 NMOS
+XM$1 VSS VSS \$12 VSS NMOS L=1u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
+* device instance $2 r0 *1 26.3,27.2 NMOS
+XM$2 \$12 \$2 \$9 VSS NMOS L=1u W=100u AS=150p AD=150p PS=130u PD=130u
+.ENDS NMOS_Base
 
 * cell OSS_PCH_ESD
 * pin PAD
