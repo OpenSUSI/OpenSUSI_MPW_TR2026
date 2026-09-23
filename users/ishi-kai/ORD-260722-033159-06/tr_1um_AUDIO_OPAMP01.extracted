@@ -35,47 +35,47 @@ X$7 P2 P7 P1 P15 P5 P4 P6 P14 P3 \$12 VSS AUDIO_OPAMP01
 * pin 
 * pin 
 * pin VSS
-.SUBCKT opamp_r2r_ABAMP \$4 \$18 \$40 \$47 \$48 VSS
+.SUBCKT opamp_r2r_ABAMP \$3 \$20 \$42 \$49 \$50 VSS
 * device instance $1 r0 *1 98.4,49.8 PMOS
-XM$1 \$18 \$8 \$27 \$18 PMOS L=2u W=16u AS=34.4p AD=34.4p PS=32.6u PD=32.6u
+XM$1 \$20 \$3 \$29 \$20 PMOS L=2u W=16u AS=34.4p AD=34.4p PS=32.6u PD=32.6u
 * device instance $3 r0 *1 59.8,49.8 PMOS
-XM$3 \$18 \$8 \$16 \$18 PMOS L=2u W=16u AS=34.4p AD=34.4p PS=32.6u PD=32.6u
+XM$3 \$20 \$3 \$19 \$20 PMOS L=2u W=16u AS=34.4p AD=34.4p PS=32.6u PD=32.6u
 * device instance $5 r0 *1 298.9,-38 PMOS
-XM$5 \$18 \$11 \$3 \$18 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
+XM$5 \$20 \$12 \$4 \$20 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
 * device instance $7 r0 *1 341.1,-38 PMOS
-XM$7 \$18 \$3 \$4 \$18 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
-* device instance $9 r0 *1 341.1,44.3 PMOS
-XM$9 \$18 \$39 \$40 \$18 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
-* device instance $11 r0 *1 298.9,44.3 PMOS
-XM$11 \$18 \$38 \$39 \$18 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
+XM$7 \$20 \$4 \$5 \$20 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
+* device instance $9 r0 *1 298.9,44.3 PMOS
+XM$9 \$20 \$40 \$41 \$20 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
+* device instance $11 r0 *1 341.1,44.3 PMOS
+XM$11 \$20 \$41 \$42 \$20 PMOS L=2u W=32u AS=68.8p AD=68.8p PS=56.6u PD=56.6u
 * device instance $13 r180 *1 258.2,50 PMOS
-XM$13 \$11 \$38 \$18 \$18 PMOS L=2u W=50u AS=88p AD=88p PS=77.6u PD=77.6u
+XM$13 \$12 \$40 \$20 \$20 PMOS L=2u W=50u AS=88p AD=88p PS=77.6u PD=77.6u
 * device instance $18 r180 *1 193.2,50 PMOS
-XM$18 \$38 \$11 \$18 \$18 PMOS L=2u W=50u AS=88p AD=88p PS=77.6u PD=77.6u
+XM$18 \$40 \$12 \$20 \$20 PMOS L=2u W=50u AS=88p AD=88p PS=77.6u PD=77.6u
 * device instance $23 r0 *1 63.9,-20.9 NMOS
-XM$23 VSS \$8 VSS VSS NMOS L=2u W=80u AS=133p AD=133p PS=116.6u PD=116.6u
+XM$23 VSS \$3 VSS VSS NMOS L=2u W=80u AS=133p AD=133p PS=116.6u PD=116.6u
 * device instance $31 r0 *1 198.7,-55.9 NMOS
-XM$31 VSS \$8 \$15 VSS NMOS L=2u W=80u AS=133p AD=133p PS=116.6u PD=116.6u
+XM$31 VSS \$3 \$18 VSS NMOS L=2u W=80u AS=133p AD=133p PS=116.6u PD=116.6u
 * device instance $39 r0 *1 298.9,-65 NMOS
-XM$39 VSS \$11 \$3 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
+XM$39 VSS \$12 \$4 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
 * device instance $41 r0 *1 341.1,-65 NMOS
-XM$41 VSS \$3 \$4 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
+XM$41 VSS \$4 \$5 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
 * device instance $43 r0 *1 298.9,17.3 NMOS
-XM$43 VSS \$38 \$39 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
+XM$43 VSS \$40 \$41 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
 * device instance $45 r0 *1 341.1,17.3 NMOS
-XM$45 VSS \$39 \$40 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
+XM$45 VSS \$41 \$42 VSS NMOS L=2u W=8u AS=17.2p AD=17.2p PS=20.6u PD=20.6u
 * device instance $47 r0 *1 238.2,22.2 NMOS
-XM$47 \$11 \$38 \$15 VSS NMOS L=2u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
+XM$47 \$12 \$40 \$18 VSS NMOS L=2u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
 * device instance $49 r0 *1 188.2,22.2 NMOS
-XM$49 \$38 \$11 \$15 VSS NMOS L=2u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
+XM$49 \$40 \$12 \$18 VSS NMOS L=2u W=20u AS=43p AD=43p PS=38.6u PD=38.6u
 * device instance $51 r0 *1 238.3,-13.2 NMOS
-XM$51 \$11 \$16 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
+XM$51 \$12 \$19 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
 * device instance $55 r0 *1 49.8,20.2 NMOS
-XM$55 \$16 \$48 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
+XM$55 \$19 \$50 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
 * device instance $59 r0 *1 98.4,20.2 NMOS
-XM$59 \$27 \$47 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
+XM$59 \$29 \$49 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
 * device instance $63 r0 *1 178.3,-13.2 NMOS
-XM$63 \$38 \$27 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
+XM$63 \$40 \$29 VSS VSS NMOS L=2u W=40u AS=73p AD=73p PS=64.6u PD=64.6u
 .ENDS opamp_r2r_ABAMP
 
 * cell AUDIO_OPAMP01
