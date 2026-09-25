@@ -19,7 +19,8 @@ aggregate:
     x: 8
     y: 8
 
-  teg_gds:  users/000_system/GDSII_TEG.gds
+  teg_gds:  users/000_system/IP62_wladek60.gds
+  # teg_gds:  users/000_system/GDSII_TEG.gds
   fill_gds: users/000_system/GDSII_FILL.gds
 
 # ----------------------------
