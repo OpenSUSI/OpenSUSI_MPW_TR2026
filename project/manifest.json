@@ -13,7 +13,7 @@
     {
       "type": "teg",
       "githubId": "000_system",
-      "gdsFile": "users/000_system/GDSII_TEG.gds",
+      "gdsFile": "users/000_system/IP62_wladek60.gds",
       "gdsTopCell": "tr_1um_000_system_teg",
       "x": -8750.0,
       "y": 8750.0,
